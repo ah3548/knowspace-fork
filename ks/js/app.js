@@ -37,3 +37,7 @@ var cy = cytoscape({
     rows: 1
   }
 });
+
+$.ajax({url: "http://localhost:3000/wiki", success: function(result){
+        $("#wiki-container").html(result);
+    }});
