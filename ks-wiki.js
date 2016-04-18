@@ -1,22 +1,24 @@
 var wikipedia = require("node-wikipedia");
 
-
 var getText = function (response) {
-    return response.text['*'];
+    return response.text['*'].toString();
 }
 
-var getWikiPage = function (callback) {
-    wikipedia.page.data(
-        "Linear_algebra", 
-        { content: true }, 
-        function(response) {
-            callback(getText(response))
+function getWikiEntry(subject) {  
+    return new Promise(function(resolve, reject) {
+        wikipedia.page.data(
+            subject, 
+            { content: true }, 
+            resolve
+        );
+    }).then(
+        function(resolve, reject) {
+           return getText(resolve);
         }
     );
 }
 
-exports = module.exports = getWikiPage;
-
+exports = module.exports = { getWikiEntry };
 
 
 /*
