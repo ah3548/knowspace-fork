@@ -8,3 +8,7 @@ MYSQL
     
 WIKIPEDIA
     node-wikipedia
+    
+ORM
+    sequelize-auto
+    node-sequelize
