@@ -13,6 +13,9 @@ var Sequelize = require('sequelize');
 var sequelize = new Sequelize('mysql://root:root@localhost:3306/ks');
 
 var Wiki = sequelize.import("./models/wikipedia");
+var SOqs = sequelize.import("./models/so_questions");
+var SOas = sequelize.import("./models/so_answers");
+
 
 function createWikiEntry(entry) {
     return Wiki.create(entry).then(function(wiki) {
@@ -35,7 +38,32 @@ function getWikiEntry(subject) {
     });
 }
 
+function getQuestion(question_id) {
+    return SOqs.findAll({
+        where: {
+        question_id: question_id
+      }
+    }).then(function(question) {
+        if (question != undefined && question[0] != undefined) {
+            return question[0].dataValues.body.toString('utf-8');
+        }
+        else {
+            throw new Error("Question " + question_id + " doesnt exist in the database, inserting now..");
+        }
+    });
+}
+
+function insertQuestion(entry) {
+    return SOqs.create(entry).then(function(question) {
+        return question;
+    }).catch(function(error) {
+        console.log("Error inserting record in database" + error);
+    });
+}
+
 module.exports = {
     createWikiEntry,
-    getWikiEntry    
+    getWikiEntry,
+    insertQuestion,
+    getQuestion
 }

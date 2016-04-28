@@ -13,7 +13,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     content: {
-      type: 'BLOB',
+      type: 'LONGBLOB',
       allowNull: false
     },
     createdAt: {

@@ -18,6 +18,8 @@ function getWikiEntry(subject) {
     );
 }
 
+
+
 exports = module.exports = { getWikiEntry };
 
 
