@@ -38,6 +38,15 @@ function getWikiEntry(subject) {
     });
 }
 
+function getAllQuestions() {
+    return SOqs.findAll().then(
+        function(questions) {
+          if (questions!=undefined)  {
+              return questions;
+          }                    
+        });
+}
+
 function getQuestion(question_id) {
     return SOqs.findAll({
         where: {
@@ -65,5 +74,6 @@ module.exports = {
     createWikiEntry,
     getWikiEntry,
     insertQuestion,
-    getQuestion
+    getQuestion,
+    getAllQuestions
 }

@@ -96,10 +96,13 @@ function getQuestions(subject) {
     );*/
 }
 
-getQuestions(subject).then(function(resolve) {
-    console.log(resolve);
+app.get('/so/questions', function (req, res) {
+    orm.getAllQuestions(subject).then(
+        function(content) {
+            res.send(content);
+        }
+    );
 });
-
 
 app.get('/wiki', function (req, res) {
     getWikiFromDB(subject).then(

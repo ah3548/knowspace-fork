@@ -5,7 +5,7 @@ var context = new stackexchange(options);
 
 var filter = {
   key: '1rg*ObbWiq8jHElVlOaR2A((',
-  pagesize: 100,
+  pagesize: 10,
   tagged: 'linear-algebra',
   sort: 'activity',
   order: 'asc',

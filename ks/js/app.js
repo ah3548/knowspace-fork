@@ -41,3 +41,17 @@ var cy = cytoscape({
 $.ajax({url: "http://localhost:3000/wiki", success: function(result){
         $("#wiki-container").html(result);
     }});
+
+
+var output="#socontainer", template="#soquestions";
+
+var soractive = new Ractive({
+  el: output,
+  template: template,
+  data: { questions: [] }
+});
+
+$.ajax({url: "http://localhost:3000/so/questions", success: function(result){
+    soractive.set('questions', result);
+        //$("#wiki-container").html(result);
+    }});
