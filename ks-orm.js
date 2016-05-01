@@ -10,7 +10,7 @@
 });*/
 var Sequelize = require('sequelize');
 
-var sequelize = new Sequelize('mysql://root:root@localhost:3306/ks');
+var sequelize = new Sequelize('mysql://root:root@localhost:3306/ks', {logging:false});
 
 var Wiki = sequelize.import("./models/wikipedia");
 var SOqs = sequelize.import("./models/so_questions");
@@ -25,15 +25,23 @@ function createWikiEntry(entry) {
     });
 }
 
+function SubjectNotAvailable(subject) {
+    this.message = "Wikipedia Entry not found, fetching now..";
+    this.subject = subject;
+}
+
 function getWikiEntry(subject) {
     return Wiki.findAll({
       where: {
         subject: subject
       }
     }).then(function(wiki) {
-        if (wiki != undefined) {
+        if (wiki != undefined && wiki[0] != undefined) {
             return wiki[0].dataValues.content.toString('utf-8') ;
 
+        }
+        else {
+            throw new SubjectNotAvailable(subject);
         }
     });
 }

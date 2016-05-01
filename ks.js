@@ -13,33 +13,6 @@ var subject = "Linear_algebra";
 
 app.use(express.static('.'));
 
-
-function getWikiFromDB(subject) {
-    return orm.getWikiEntry(subject).then(
-        function(content) {
-            return content;
-        }
-    ).catch(
-        function(error) {
-            console.log("Wikipedia Entry not found, fetching now..");
-            return getWiki(subject).then(
-                function(content) {
-                    return content;
-                }
-            );
-        }
-    );
-}
-
-function getWiki(subject) {
-    return wiki.getWikiEntry(subject).then(
-        function(content) {
-            return orm.createWikiEntry( 
-            {subject:subject, content:content});
-        }
-    );
-}
-
 function getQuestionsFromDB(subject) {
     return orm.getWikiEntry(subject).then(
         function(content) {
@@ -104,8 +77,8 @@ app.get('/so/questions', function (req, res) {
     );
 });
 
-app.get('/wiki', function (req, res) {
-    getWikiFromDB(subject).then(
+app.get('/wiki/:id', function (req, res) {
+    wiki.getWikiEntry(req.params.id).then(
         function(content) {
             res.send(content);
         }
