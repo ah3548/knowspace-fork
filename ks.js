@@ -1,8 +1,9 @@
-var express = require('express');
-var wiki = require('./ks-wiki');
-var so = require('./ks-so');
-var orm = require('./ks-orm');
-var app = express();
+var express = require('express'),
+    wiki = require('./ks-wiki'),
+    so = require('./ks-so'),
+    orm = require('./ks-orm'),
+    graph = require('./ks-graph'),
+    app = express();
 
 
 //var Faker = require('faker');
@@ -78,11 +79,17 @@ app.get('/so/questions', function (req, res) {
 });
 
 app.get('/wiki/:id', function (req, res) {
-    wiki.getWikiEntry(req.params.id).then(
-        function(content) {
-            res.send(content);
-        }
-    );
+    wiki.getWikiEntry(req.params.id)
+        .then(graph.removeMetaData)
+        //.then(graph.extractText)
+        .then(content => { res.send(content); });
+});
+
+app.get('/wiki/:id/links', function (req, res) {
+    wiki.getWikiEntry(req.params.id)
+        .then(graph.removeMetaData)
+        .then(graph.getAllLinks)
+        .then(content => { res.send(content); });
 });
 
 app.listen(3000, function () {

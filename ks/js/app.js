@@ -2,13 +2,7 @@ var cy = cytoscape({
   container: document.getElementById('cy'),
   elements: [ // list of graph elements to start with
     { // node a
-      data: { id: 'a' }
-    },
-    { // node b
-      data: { id: 'b' }
-    },
-    { // edge ab
-      data: { id: 'ab', source: 'a', target: 'b' }
+      data: { id: 'Linear Algebra' }
     }
   ],
 
@@ -38,9 +32,57 @@ var cy = cytoscape({
   }
 });
 
-$.ajax({url: "http://localhost:3000/wiki", success: function(result){
+$.ajax({url: "http://localhost:3000/wiki/Linear_Algebra", success: function(result){
         $("#wiki-container").html(result);
     }});
+
+
+$.ajax({
+    url: "http://localhost:3000/wiki/Linear_Algebra/links", success: function(result){
+        for (var i = 0; i < result.length; i++) {
+            var ref = result[i];
+            var nExists = getNode(ref);
+            if (nExists.length == 0) {
+                addNode(ref);
+            }
+            if (i-1 >= 0) {
+                var prev_ref = result[i-1];
+                var eExists = getEdge(ref, prev_ref);
+                if (eExists.length == 0) {
+                    addEdge(ref, prev_ref);
+                }
+            }
+            cy.fit();
+        }
+    }
+});
+
+function addNode(ref) {
+    cy.add({
+        data: {
+            id: ref.title
+        }
+    });
+}
+
+function addEdge(ref, prev_ref) {
+    cy.add({
+        data: { 
+            id: prev_ref.title + "," + ref.title, 
+            source: prev_ref.title,      
+            target: ref.title 
+        }
+    });
+}
+
+function getNode(ref) {
+    return cy.getElementById(ref.title);
+}
+
+function getEdge(ref, prev_ref) {
+    return cy.getElementById(prev_ref.title + "," + ref.title);
+}
+
 
 
 var output="#socontainer", template="#soquestions";
