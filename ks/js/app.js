@@ -27,8 +27,13 @@ var cy = cytoscape({
   ],
 
   layout: {
-    name: 'grid',
-    rows: 1
+    name: 'concentric',
+    concentric: function( node ){
+      return node.degree();
+    },
+    levelWidth: function( nodes ){
+      return 2;
+    }
   }
 });
 
@@ -39,7 +44,7 @@ $.ajax({url: "http://localhost:3000/wiki/Linear_Algebra", success: function(resu
 
 $.ajax({
     url: "http://localhost:3000/wiki/Linear_Algebra/links", success: function(result){
-        for (var i = 0; i < result.length; i++) {
+        for (var i = 0; i < result.length && i < 100; i++) {
             var ref = result[i];
             var nExists = getNode(ref);
             if (nExists.length == 0) {
@@ -52,12 +57,22 @@ $.ajax({
                     addEdge(ref, prev_ref);
                 }
             }
-            cy.fit();
         }
+        addEdge({title: result[0].title},                                 {title:"Linear Algebra"}
+                );
+       cy.layout({
+            name: 'concentric',
+            concentric: function( node ){
+              return node.degree();
+            },
+            levelWidth: function( nodes ){
+              return 2;
+            }
+          });
     }
 });
 
-function addNode(ref) {
+function addNode(ref) { // {title:<>"}
     cy.add({
         data: {
             id: ref.title

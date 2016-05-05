@@ -12,3 +12,9 @@ WIKIPEDIA
 ORM
     sequelize-auto
     node-sequelize
+    
+To-do for Day
+Graph Linked To Analysis
+Capture User Input
+
+Submission of Questions & Answers
