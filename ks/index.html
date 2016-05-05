@@ -12,7 +12,9 @@
     <title>Knowledge Space</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link href="../node_modules/cytoscape-panzoom/cytoscape.js-panzoom.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="css/landing-page.css" rel="stylesheet">
@@ -105,10 +107,19 @@
                     <h2 class="section-heading">Stack Overflow</h2>
                     <div id="socontainer"></div>
                     <script id="soquestions" type="text/ractive"> 
-                    {{#questions}}
-                        <h3>Question</h3>
-                        {{{body}}}
-                    {{/questions}}
+                    <ul class="ChatLog">
+                        {{#questions}}        
+
+                          <li class="ChatLog__entry">
+                            <img class="ChatLog__avatar" src="//placekitten.com/g/50/50" />
+                            <p class="ChatLog__message">
+                                {{{body}}}
+                            </p>
+                          </li>
+                        {{/questions}}
+
+                    </ul>
+                    
                     </script>
                 </div>
                 <!--<div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">-->
@@ -193,10 +204,11 @@
         </div>
     </footer>
     
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
     
+        <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="./../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="../../node_modules/cytoscape/dist/cytoscape.min.js"></script>
+    <script src="../../node_modules/cytoscape-panzoom/cytoscape-panzoom.js"></script>
     <script src="../../node_modules/ractive/ractive.min.js"></script>
     
     

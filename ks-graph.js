@@ -32,6 +32,8 @@ function removeMetaData(body) {
             }
         })
         .remove();
+    
+    $('a').attr("onclick","appIntercept(event)");
 
     return $.root().html();
 }

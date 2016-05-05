@@ -12,7 +12,10 @@ WIKIPEDIA
 ORM
     sequelize-auto
     node-sequelize
-    
+
+breadcrumbs
+stack overflow answer
+
 To-do for Day
 Graph Linked To Analysis
 Capture User Input
