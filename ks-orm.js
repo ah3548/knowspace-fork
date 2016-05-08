@@ -46,8 +46,14 @@ function getWikiEntry(subject) {
     });
 }
 
-function getAllQuestions() {
-    return SOqs.findAll().then(
+function getAllQuestions(subject) {
+    return SOqs.findAll({
+        where: {
+            tags: {
+                $like: '%' + subject.replace(/[ _]/i,'-') + '%'
+            }
+        }
+    }).then(
         function(questions) {
           if (questions!=undefined)  {
               return questions;

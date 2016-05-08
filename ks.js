@@ -70,8 +70,8 @@ function getQuestions(subject) {
     );*/
 }
 
-app.get('/so/questions', function (req, res) {
-    orm.getAllQuestions(subject).then(
+app.get('/so/questions/:id', function (req, res) {
+    orm.getAllQuestions(req.params.id).then(
         function(content) {
             res.send(content);
         }

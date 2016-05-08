@@ -14,17 +14,29 @@ var filter = {
 
 // Get all the questions (http://api.stackexchange.com/docs/questions)
 
+function getResponse(response) {
+    console.log("RESPONSE L: "+ response.items.length);
+    return response.items;
+}
+
 function getQuestions(subject) {
-    filter.subject = subject;
+    filter.tagged = subject;
     return new Promise(function(resolve, reject) { context.questions.questions(filter,function(error,success) {
           if (error) console.log(error);
             resolve(success);
         }); 
-    }).then(function(response) {
-        console.log("RESPONSE LENGTH: "+ response.items.length);
-        return response.items;
-    });
+    }).then(getResponse);
 }
+
+function getAnswers() {
+    return new Promise(function(resolve, reject) { context.answers.answers(filter,function(error,success) {
+          if (error) console.log(error);
+            resolve(success);
+        }); 
+    }).then(getResponse);
+}
+
+getAnswers();
 
 exports = module.exports = { getQuestions };
 

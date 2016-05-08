@@ -13,11 +13,11 @@ ORM
     sequelize-auto
     node-sequelize
 
-breadcrumbs
+breadcrumbs clicking
 stack overflow answer
+Capture User Input
 
 To-do for Day
 Graph Linked To Analysis
-Capture User Input
 
 Submission of Questions & Answers
