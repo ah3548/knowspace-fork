@@ -2,16 +2,6 @@ https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-el
 
 http://js.cytoscape.org/#introduction/packages
 
-MYSQL
-    mysql-server
-    phpmyadmin
-    
-WIKIPEDIA
-    node-wikipedia
-    
-ORM
-    sequelize-auto
-    node-sequelize
 
 breadcrumbs clicking
 stack overflow answer
