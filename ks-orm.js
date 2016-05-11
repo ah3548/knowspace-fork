@@ -46,8 +46,20 @@ function getWikiEntry(subject) {
     });
 }
 
-function getAllQuestions(subject) {
+function getAllQuestions(subject, number) {
+    if (number == null) {
+        number = 5;
+    }
+    SOqs.hasMany(SOas, {
+      foreignKey: 'question_id',
+      constraints: false
+    });
     return SOqs.findAll({
+        include: [{
+            model: SOas,
+            where: { question_id: Sequelize.col('so_answers.question_id') }
+        }],
+        limit: number,
         where: {
             tags: {
                 $like: '%' + subject.replace(/[ _]/i,'-') + '%'
@@ -56,8 +68,24 @@ function getAllQuestions(subject) {
     }).then(
         function(questions) {
           if (questions!=undefined)  {
+              convertBlobsToString(questions);
               return questions;
           }                    
+        });
+}
+
+function toUTF8(entry) {
+    return entry.dataValues.body.toString('utf-8');
+}
+
+function convertBlobsToString(listOfEntries) {
+    listOfEntries.forEach(
+        function(question) {
+            question.dataValues.body = toUTF8(question); 
+        question.so_answers.forEach(
+            function(answer) {
+                answer.dataValues.body = toUTF8(answer);
+            });
         });
 }
 
@@ -76,6 +104,21 @@ function getQuestion(question_id) {
     });
 }
 
+function getAnswer(answer_id) {
+    return SOas.findAll({
+        where: {
+        answer_id: answer_id
+      }
+    }).then(function(answer) {
+        if (answer != undefined && answer[0] != undefined) {
+            return answer[0].dataValues.body.toString('utf-8');
+        }
+        else {
+            throw new Error("Answer " + answer_id + " doesnt exist in the database, inserting now..");
+        }
+    });
+}
+
 function insertQuestion(entry) {
     return SOqs.create(entry).then(function(question) {
         return question;
@@ -84,10 +127,24 @@ function insertQuestion(entry) {
     });
 }
 
+function insertAnswer(entry) {
+    return SOas.create(entry).then(function(answers) {
+        return answers;
+    }).catch(function(error) {
+        console.log("Error inserting record in database" + error);
+    });
+}
+/*
+getAllQuestions("linear-algebra").then(
+    result => { console.log(result[0].dataValues.so_answers[0].dataValues); }
+);*/
+
 module.exports = {
     createWikiEntry,
     getWikiEntry,
     insertQuestion,
     getQuestion,
-    getAllQuestions
+    getAllQuestions,
+    getAnswer,
+    insertAnswer
 }

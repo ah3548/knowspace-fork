@@ -44,7 +44,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     body: {
-      type: DataTypes.STRING,
+      type: 'LONGBLOB',
       allowNull: true
     },
     has_more: {

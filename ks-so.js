@@ -5,17 +5,21 @@ var context = new stackexchange(options);
 
 var filter = {
   key: '1rg*ObbWiq8jHElVlOaR2A((',
-  pagesize: 10,
+  pagesize: 100,
   tagged: 'linear-algebra',
   sort: 'activity',
   order: 'asc',
-  filter:'!bB.KRGASCL.5mP'
+  filter:'!2.u)4sjJ6K-ZBBkHcYUPe'
 };
 
+
+//!bB.KRGASCL.5mP -- no answers
+// 
 // Get all the questions (http://api.stackexchange.com/docs/questions)
 
 function getResponse(response) {
     console.log("RESPONSE L: "+ response.items.length);
+    console.log(response.items[0].answer_count);
     return response.items;
 }
 
@@ -28,15 +32,7 @@ function getQuestions(subject) {
     }).then(getResponse);
 }
 
-function getAnswers() {
-    return new Promise(function(resolve, reject) { context.answers.answers(filter,function(error,success) {
-          if (error) console.log(error);
-            resolve(success);
-        }); 
-    }).then(getResponse);
-}
-
-getAnswers();
+getQuestions('linear-algebra');
 
 exports = module.exports = { getQuestions };
 

@@ -39,10 +39,21 @@ function insertQuestionsIntoDB(questions) {
     }
 }
 
+function insertAnswersIntoDB(answers) {
+    for (var i = 0; i < answers.length; i++) {
+        insertAnswersPromise(answers[i]).then(function(){
+            console.log("Insert Complete");
+        });
+    }
+}
+
 function insertQuestionPromise(question) {
     return new Promise(function(resolve, reject) {
         var id = question.question_id;
         orm.getQuestion(id).then(function(body) {
+            if (question.answer_count != 0) {   
+                insertAnswersIntoDB(question.answers);
+            }
             console.log("Question " + id + " found");
             return body;
         }).catch (
@@ -50,6 +61,24 @@ function insertQuestionPromise(question) {
                 console.log(error);
                 question.tags = JSON.stringify(question.tags);
                 orm.insertQuestion(question);
+            }
+        );
+
+        resolve();
+
+    });
+}
+
+function insertAnswersPromise(answer) {
+    return new Promise(function(resolve, reject) {
+        var id = answer.answer_id;
+        orm.getAnswer(id).then(function(body) {
+            console.log("Answer " + id + " found");
+            return body;
+        }).catch (
+            function(error) {
+                console.log(error);
+                orm.insertAnswer(answer); //CONTINUE HERE
             }
         );
         resolve();
@@ -95,3 +124,5 @@ app.get('/wiki/:id/links', function (req, res) {
 app.listen(3000, function () {
   console.log('Listening on port 3000!');
 });
+
+//getQuestions(subject);

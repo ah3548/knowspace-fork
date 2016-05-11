@@ -27,7 +27,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     body: {
-      type: DataTypes.STRING,
+      type: 'LONGBLOB',
       allowNull: true
     },
     createdAt: {
@@ -37,6 +37,12 @@ module.exports = function(sequelize, DataTypes) {
     updatedAt: {
       type: DataTypes.DATE,
       allowNull: false
+    },
+    id: {
+      type: DataTypes.INTEGER(11),
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
     }
   }, {
     tableName: 'so_answers'
