@@ -110,6 +110,7 @@ app.get('/so/questions/:id', function (req, res) {
 app.get('/wiki/:id', function (req, res) {
     wiki.getWikiEntry(req.params.id)
         .then(graph.removeMetaData)
+        .then(graph.removeEditLinks)
         //.then(graph.extractText)
         .then(content => { res.send(content); });
 });
@@ -117,6 +118,7 @@ app.get('/wiki/:id', function (req, res) {
 app.get('/wiki/:id/links', function (req, res) {
     wiki.getWikiEntry(req.params.id)
         .then(graph.removeMetaData)
+        .then(graph.removeEditLinks)
         .then(graph.getAllLinks)
         .then(content => { res.send(content); });
 });

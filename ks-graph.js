@@ -90,6 +90,30 @@ function extractText(body) {
 }
 
 
+function removeEditLinks(body) {
+    $ = cheerio.load(body);    
+    var level = $.root().contents();
+    level.find('.mw-editsection').remove();
+        
+    var lastHeader = null;
+    $.root().children().each(
+        function(i, element) {
+            if (element.name === 'h2') {
+                var newId = $(this).children().first().attr('id');
+                $(this).after('<div class="collapse" id="' + newId + '"></div>');
+                lastHeader = $(this).next();                    
+                $(this).replaceWith('<h2 role="button" data-toggle="collapse" href="#' + newId + '" aria-expanded="false" aria-controls="' + newId + '">' + $(this).children().first().text() +  '</h2>');
+
+            }
+            else if (lastHeader!=null) {
+                lastHeader.append($(this));
+            }
+        }
+    );
+    
+    return $.root().html();
+}
+
 /* Come back to at later point, not relevant right now */
 /*
 function getImportance(body, word) {
@@ -115,5 +139,6 @@ tfidf.listTerms(0).forEach(function(item) {
 module.exports = {
     extractText,
     removeMetaData,
+    removeEditLinks,
     getAllLinks
 }

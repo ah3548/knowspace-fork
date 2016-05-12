@@ -2,9 +2,8 @@ https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-el
 
 http://js.cytoscape.org/#introduction/packages
 
-
+collapse wikipedia sections
 breadcrumbs clicking
-stack overflow answer
 Capture User Input
 
 To-do for Day
