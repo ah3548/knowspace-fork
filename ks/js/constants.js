@@ -47,7 +47,16 @@ angular.module('ksApp')
             ])
     .value('questions', [ {body: '<div></div>'}
                 
-            ]);
+            ])
+    .factory('wiki', ['$resource', function($resource) {
+        return {
+            get: function() {
+                return $resource("http://localhost:3000/wiki/:subject",
+                                  {subject:'@subject'},
+                                  {query: {method: 'get', isArray:false}});
+            }
+        }
+    }]);
             
 
 

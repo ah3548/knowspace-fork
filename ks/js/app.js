@@ -11,8 +11,8 @@ angular.module('ksApp', ['ngRoute','ngSanitize','ngResource'])
       templateUrl:'view/view.html'
   });
 }])
-    .controller('MainCtrl', ['$scope', '$resource', 'categories', 'subjects', 'zoomToolDefaults', 'cyStyle', 'questions',
-                             function($scope, $resource, categories, subjects, zoomToolDefaults, cyStyle, questions) {
+    .controller('MainCtrl', ['$scope', '$resource', 'categories', 'subjects', 'zoomToolDefaults', 'cyStyle', 'questions','wiki',
+                             function($scope, $resource, categories, subjects, zoomToolDefaults, cyStyle, questions, wiki) {
     $scope.subject = "Linear Algebra";
     $scope.categories = categories;
     $scope.subjects = subjects;
@@ -112,11 +112,15 @@ angular.module('ksApp', ['ngRoute','ngSanitize','ngResource'])
     }
                                  
     // ################### SERVICES ############################## 
-
+    
+    
     function getWiki(subject) {
-        $.ajax({url: "http://localhost:3000/wiki/" + subject, success: function(result){
+        /*$.ajax({url: "http://localhost:3000/wiki/" + subject, success: function(result){
             $("#wiki-container").html(result);
-        }});
+        }});*/
+        wiki.get().query({subject:subject}).$promise.then(function(article) {
+            $scope.article=article.body;
+        });
     }
     getWiki(subjects[0].name);
 
@@ -148,11 +152,16 @@ angular.module('ksApp', ['ngRoute','ngSanitize','ngResource'])
           $scope.questions = qs;
         });
     }
-    getSO(subjects[0].name);
-        
-    console.log("TEST");                     
+    getSO(subjects[0].name);          
                             
-}]);
+}])
+.run(function($rootScope, $location, $anchorScroll, $routeParams) {
+  //when the route is changed scroll to the proper element.
+  $rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
+    $location.hash($routeParams.scrollTo);
+    $anchorScroll();  
+  });
+});
 
 
 

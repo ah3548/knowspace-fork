@@ -18,7 +18,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li ng-repeat="c in categories">
-                        <a data-target="#{{c.title}}">{{c.title}}</a>
+                        <a href="#?scrollTo={{c.title}}">{{c.title}}</a>
                     </li>
                 </ul>
             </div>
@@ -115,7 +115,7 @@
                 <div class="col-lg-6 col-sm-6">
                     <hr class="section-heading-spacer">
                     <div class="clearfix"></div>
-                    <div id="wiki-container"></div>
+                    <div id="wiki-container" ng-bind-html="article"></div>
                 </div>
             </div>      
                 

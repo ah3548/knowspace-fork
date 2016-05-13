@@ -33,7 +33,9 @@ function removeMetaData(body) {
         })
         .remove();
     
-    $('a').attr("ng-click","appIntercept($event)");
+    console.log($('a').attr('href'));
+    $('a').attr('href',"#?subject=" + $('a').attr('href')+"&scrollTo=Guides");
+    //$('a').attr("ng-click","appIntercept($event)");
 
     return $.root().html();
 }

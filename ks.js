@@ -133,7 +133,7 @@ app.get('/wiki/:id', function (req, res) {
         .then(graph.removeMetaData)
         .then(graph.removeEditLinks)
         //.then(graph.extractText)
-        .then(content => { res.send(content); });
+        .then(content => { res.send({body:content}); });
 });
 
 app.get('/wiki/:id/links', function (req, res) {
