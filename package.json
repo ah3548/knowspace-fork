@@ -4,8 +4,13 @@
   "description": "",
   "main": "ks.js",
   "dependencies": {
+    "angular": "^1.5.5",
+    "angular-resource": "^1.5.5",
+    "angular-route": "^1.5.5",
+    "angular-sanitize": "^1.5.5",
     "bootstrap": "^3.3.6",
     "cheerio": "^0.20.0",
+    "client-sessions": "^0.7.0",
     "cytoscape": "~2.6.7",
     "cytoscape-panzoom": "^2.3.0",
     "elasticsearch": "~10.1.3",

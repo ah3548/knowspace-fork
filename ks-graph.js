@@ -33,7 +33,7 @@ function removeMetaData(body) {
         })
         .remove();
     
-    $('a').attr("onclick","appIntercept(event)");
+    $('a').attr("ng-click","appIntercept($event)");
 
     return $.root().html();
 }
