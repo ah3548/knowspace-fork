@@ -140,6 +140,46 @@ function splitIntro(body) {
     return {intro: intro, body: $.root().html()};
 }
 
+function removeReferences(body) {
+    $ = cheerio.load(body); 
+    
+    var badWord="External_links";
+    
+    $('h2')
+        .filter(isBadRef).remove();
+    
+    $('div')
+        .filter(isBadId).remove();
+        
+    return $.root().html();
+}
+
+var badSections = [
+    "External_links",
+    "Further_reading",
+    "Notes",
+    "References",
+    "See_Also"
+];
+
+function isBadRef() {
+    var ref = $(this).attr('href');
+    for (var i = 0; i < badSections.length; i++) {
+        if (ref === '#' + badSections[i]) {
+            return true;
+        }
+    }
+}
+
+function isBadId() {
+    var id = $(this).attr('id');
+    for (var i = 0; i < badSections.length; i++) {
+        if (id === badSections[i]) {
+            return true;
+        }
+    }
+}
+
 /* Come back to at later point, not relevant right now */
 /*
 function getImportance(body, word) {
@@ -166,7 +206,10 @@ tfidf.listTerms(0).forEach(function(item) {
     .then(removeComments)
     .then(removeMetaData)
     .then(removeEditLinks)
-    .then(splitIntro);*/
+    .then(removeReferences)
+    .then(content => {
+        console.log(content);
+    });*/
 
 module.exports = {
     extractText,
@@ -174,5 +217,6 @@ module.exports = {
     removeEditLinks,
     linkToCallback,
     getAllLinks,
-    splitIntro
+    splitIntro,
+    removeReferences
 }

@@ -4,17 +4,31 @@ angular.module('ksApp', ['ngResource','angular-bind-html-compile','ngCookies'])
     .config(['$sceProvider',function($sceProvider){
         $sceProvider.enabled(false);
     }])
-    .controller('MainCtrl', ['$scope', '$resource', '$document', '$rootScope', '$cookies', 'categories', 'subjects', 'zoomToolDefaults', 'cyStyle', 'questions','wiki', 'ksGraph',
-                             function($scope, $resource, $document, $rootScope, $cookies, categories, subjects, zoomToolDefaults, cyStyle, questions, wiki, ksGraph) {
+    .controller('MainCtrl', ['$scope', '$resource', '$document', '$rootScope', '$cookies', 'categories', 'subjects', 'zoomToolDefaults', 'cyStyle', 'questions','wiki', 'ksGraph', 'AuthenticationService',
+                             function($scope, $resource, $document, $rootScope, $cookies, categories, subjects, zoomToolDefaults, cyStyle, questions, wiki, ksGraph, AuthenticationService) {
+    $scope.username = '';
     $scope.subject = getSessionInfo('subject');
     $scope.categories = categories;
     $scope.subjects = getSessionInfo('subjects');
     $scope.questions = questions;
-    
-    console.log(subjects);
-    var cy = null;
+    //$scope.password = '';
+                                 
+    AuthenticationService.ClearCredentials();                   
+    $scope.login = function () {
+        $scope.dataLoading = true;
+        AuthenticationService.Login($scope.username, null, function(response) {
+            if(response.success) {
+                AuthenticationService.SetCredentials($scope.username, null);
+            } else {
+                $scope.error = response.message;
+            }
+            $scope.dataLoading = false;
+        });
+    }
     
     /* CY INIT */
+    var cy = null;
+
     $scope.initGraph = function() {
         getBaseGraph();
        cy.json(getSessionInfo('graph'));
@@ -81,7 +95,7 @@ angular.module('ksApp', ['ngResource','angular-bind-html-compile','ngCookies'])
     
 
     function addLinksToGraph(result) {
-        for (var i = 0; i < result.length && i < 100; i++) {
+        for (var i = 0; i < result.length && i < 3; i++) {
             var ref = result[i];
             var nExists = getNode(ref);
             if (nExists.length == 0) {
@@ -115,14 +129,19 @@ angular.module('ksApp', ['ngResource','angular-bind-html-compile','ngCookies'])
         var value = $cookies.getObject(name);
         if (value == null) {
             switch(name) {
-                case "subject": value = subjects[0].name;
+                case "subject": 
+                    value = subjects[0].name;
+                    updateSessionInfo(name, value);
                     break;
-                case "subjects": value = subjects;
+                case "subjects": 
+                    value = subjects;
+                    updateSessionInfo(name, value);
                     break;
-                case "graph": value = cy.json();
+                case "graph": 
+                    value = cy.json();
+                    saveProgress($scope.username, value);
                     break;
             }
-            updateSessionInfo(name, value);
         }
         return value;
     }
@@ -130,15 +149,20 @@ angular.module('ksApp', ['ngResource','angular-bind-html-compile','ngCookies'])
     function updateSessionInfo(name) {
         var value = "";
         switch(name) {
-            case "subject": value = subjects[subjects.length-1].name;
+            case "subject": 
+                value = subjects[subjects.length-1].name;
+                $cookies.putObject(name, value);
                 break;
-            case "subjects": value = subjects;
+            case "subjects": 
+                value = subjects;
+                $cookies.putObject(name, value);
                 break;
-            case "graph": value = cy.json();
+            case "graph": 
+                value = cy.json();
+                saveProgress($scope.username, value);
                 break;
         }
         console.log(value);
-        $cookies.putObject(name, value);
     }
     
     $scope.updateBreadCrumbs = function(subject) {
@@ -179,7 +203,7 @@ angular.module('ksApp', ['ngResource','angular-bind-html-compile','ngCookies'])
 
     $scope.appIntercept = function (linkPath) {
         var rPath = linkPath.split('/');
-        addSub(subject);
+        addSub(rPath[2]);
         loadNewSubject(rPath[2]);
     }
                                  
@@ -208,7 +232,18 @@ angular.module('ksApp', ['ngResource','angular-bind-html-compile','ngCookies'])
           $scope.questions = qs;
         });
     }
-    getSO(subjects[0].name);         
+    getSO(subjects[0].name); 
+                                 
+                                 
+    function saveProgress(graph) {
+        var SP = $resource("http://localhost:3000/saveProgress",
+                          {},
+                          {save: {method: 'post', params: {username: $scope.username, graph: graph}}});
+        var sp = new SP();
+        sp.$save().then(function(result) {
+          console.log(result);
+        });
+    }
                             
 }])
 .directive('ksPage', function() {

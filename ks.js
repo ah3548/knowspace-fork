@@ -1,4 +1,6 @@
 var express = require('express'),
+    bodyParser = require('body-parser'),
+    cookieParser = require('cookie-parser'),
     wiki = require('./ks-wiki'),
     so = require('./ks-so'),
     orm = require('./ks-orm'),
@@ -120,6 +122,21 @@ function getQuestions(subject) {
     );*/
 }
 
+app.use(bodyParser.json());
+app.use(cookieParser());
+
+app.post('/login', function (req, res) {
+    console.log(req.body);
+    console.log(req.cookies);
+    res.send('');
+});
+
+app.post('/saveProgress', function (req, res) {
+    console.log(req.body);
+    console.log(req.cookies);
+    res.send('');
+});
+
 app.get('/so/questions/:id', function (req, res) {
     orm.getAllQuestions(req.params.id).then(
         function(content) {
@@ -132,6 +149,7 @@ app.get('/wiki/:id', function (req, res) {
     wiki.getWikiEntry(req.params.id)
         .then(graph.removeMetaData)
         .then(graph.removeEditLinks)
+        .then(graph.removeReferences)
         .then(graph.linkToCallback)
         .then(graph.splitIntro)
         //.then(graph.extractText)
@@ -142,6 +160,7 @@ app.get('/wiki/:id/links', function (req, res) {
     wiki.getWikiEntry(req.params.id)
         .then(graph.removeMetaData)
         .then(graph.removeEditLinks)
+        .then(graph.removeReferences)
         .then(graph.getAllLinks)
         .then(content => { res.send(content); });
 });
