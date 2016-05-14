@@ -24,28 +24,38 @@ angular.module('ksApp')
                   zoomOutIcon: 'fa fa-minus',
                   resetIcon: 'fa fa-expand'
                 })
-    .constant('cyStyle', [ // the stylesheet for the graph
-                {
-                  selector: 'node',
-                  style: {
-                    'background-color': '#666',
-                    'label': 'data(id)'
-                  }
-                },
-                {
-                  selector: 'edge',
-                  style: {
-                    'width': 3,
-                    'line-color': '#ccc',
-                    'target-arrow-color': '#ccc',
-                    'target-arrow-shape': 'triangle'
-                  }
-                }
-              ])
+    .service('cyStyle', ['emojis', function(emojis) {
+        return cytoscape.stylesheet()
+            .selector('node')
+              .css({
+                'background-color': '#666',
+                'background-fit': 'cover',
+                'label': 'data(id)'
+              })
+            .selector('edge')
+              .css({
+                'width': 3,
+                'line-color': '#ccc',
+                'target-arrow-color': '#ccc',
+                'target-arrow-shape': 'triangle'
+              })
+            .selector('.confused')
+              .css({
+                'background-image': emojis.confused,
+              })
+            .selector('.satisfied')
+              .css({
+                'background-image': emojis.satisfied
+              })
+    }])
     .value('subjects', [
                 {name: "Linear_Algebra"}
             ])
     .value('questions', [])
+    .value('emojis', {
+            confused: 'http://www.emoji-cheat-sheet.com/graphics/emojis/confused.png',
+            satisfied: 'http://www.emoji-cheat-sheet.com/graphics/emojis/satisfied.png'        
+          })
     .factory('wiki', ['$resource', function($resource) {
         return {
             get: function() {

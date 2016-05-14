@@ -1,21 +1,27 @@
 'use strict';
 
-angular.module('ksApp', ['ngResource','angular-bind-html-compile'])
+angular.module('ksApp', ['ngResource','angular-bind-html-compile','ngCookies'])
     .config(['$sceProvider',function($sceProvider){
         $sceProvider.enabled(false);
     }])
-    .controller('MainCtrl', ['$scope', '$resource', '$document', '$rootScope', 'categories', 'subjects', 'zoomToolDefaults', 'cyStyle', 'questions','wiki', 'ksGraph',
-                             function($scope, $resource, $document, $rootScope, categories, subjects, zoomToolDefaults, cyStyle, questions, wiki, ksGraph) {
-    $scope.subject = "Linear Algebra";
+    .controller('MainCtrl', ['$scope', '$resource', '$document', '$rootScope', '$cookies', 'categories', 'subjects', 'zoomToolDefaults', 'cyStyle', 'questions','wiki', 'ksGraph',
+                             function($scope, $resource, $document, $rootScope, $cookies, categories, subjects, zoomToolDefaults, cyStyle, questions, wiki, ksGraph) {
+    $scope.subject = getSessionInfo('subject');
     $scope.categories = categories;
-    $scope.subjects = subjects;
+    $scope.subjects = getSessionInfo('subjects');
     $scope.questions = questions;
     
+    console.log(subjects);
     var cy = null;
     
     /* CY INIT */
     $scope.initGraph = function() {
-       cy = cytoscape({
+        getBaseGraph();
+       cy.json(getSessionInfo('graph'));
+    }
+    
+    function getBaseGraph() { 
+        cy = cytoscape({
           container: $('#cy'),
           elements: [ // list of graph elements to start with
             { // node a
@@ -26,6 +32,7 @@ angular.module('ksApp', ['ngResource','angular-bind-html-compile'])
         });
         
         cy.on('select', 'node', function(e) {
+            this.addClass("confused");
             var node = this;
             var subject = node._private.data.id;
             addSub(subject);
@@ -67,8 +74,9 @@ angular.module('ksApp', ['ngResource','angular-bind-html-compile'])
     /* CY FUNCTIONS */
     function updateGraph(result){
         addLinksToGraph(result);
-        addEdge({title: result[0].title}, {title:"Linear Algebra"});
+        //addEdge({title: result[0].title}, {title:"Linear Algebra"});
         setGraphLayout();
+        updateSessionInfo('graph');
     }
     
 
@@ -103,16 +111,46 @@ angular.module('ksApp', ['ngResource','angular-bind-html-compile'])
     }
       
 /* END CY */
+    function getSessionInfo(name) {
+        var value = $cookies.getObject(name);
+        if (value == null) {
+            switch(name) {
+                case "subject": value = subjects[0].name;
+                    break;
+                case "subjects": value = subjects;
+                    break;
+                case "graph": value = cy.json();
+                    break;
+            }
+            updateSessionInfo(name, value);
+        }
+        return value;
+    }
                                  
+    function updateSessionInfo(name) {
+        var value = "";
+        switch(name) {
+            case "subject": value = subjects[subjects.length-1].name;
+                break;
+            case "subjects": value = subjects;
+                break;
+            case "graph": value = cy.json();
+                break;
+        }
+        console.log(value);
+        $cookies.putObject(name, value);
+    }
+    
     $scope.updateBreadCrumbs = function(subject) {
+        $scope.subject = subject;
        for (var i = 0; i < subjects.length; i++) {
            if (subjects[i].name == subject) {
-               console.log(subjects[i].name);
-               console.log(subjects.slice(0,i+1));
                $scope.subjects = subjects.slice(0,i+1);
                break;
            }
        }
+        updateSessionInfo('subject');
+        updateSessionInfo('subjects');
         loadNewSubject(subject);
     }
                                  
@@ -124,8 +162,19 @@ angular.module('ksApp', ['ngResource','angular-bind-html-compile'])
 
     function addSub(subject) {
         $scope.subject=subject;
-        $scope.subjects.push({name:subject});
-        sessionStorage.setItem('subjects',JSON.stringify($scope.subjects));
+        var contains = false;
+        console.log(subject);
+        $scope.subjects.forEach(function(element) {
+            console.log(element.name);
+            if (element.name == subject) {
+                contains = true;
+            }
+        });
+        if (!contains) {
+            $scope.subjects.push({name:subject});
+            updateSessionInfo('subjects', subjects);
+        }
+        updateSessionInfo('subject', subject);
     }
 
     $scope.appIntercept = function (linkPath) {
@@ -135,15 +184,19 @@ angular.module('ksApp', ['ngResource','angular-bind-html-compile'])
     }
                                  
     // ################### SERVICES ############################## 
-    function getWiki(subject) { wiki.get().query({subject:subject}).$promise.then(function(article) {
+    function getWiki(subject) { 
+        wiki.get().query({subject:subject}).$promise.then(function(article) {
             $scope.article=article;
         });
     }
     getWiki(subjects[0].name);
 
     function getWikiLinks(subject) {
-        $.ajax({
-            url: "http://localhost:3000/wiki/" + subject + "/links", success: updateGraph
+        var links = $resource("http://localhost:3000/wiki/:subject/links",
+                                  {subject:'@subject'},
+                                  {query: {method: 'get', isArray:true}});
+        return links.query({subject:subject}).$promise.then(function(ls) {
+            updateGraph(ls);
         });
     }
 
