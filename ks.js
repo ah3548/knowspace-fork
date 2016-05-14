@@ -132,8 +132,10 @@ app.get('/wiki/:id', function (req, res) {
     wiki.getWikiEntry(req.params.id)
         .then(graph.removeMetaData)
         .then(graph.removeEditLinks)
+        .then(graph.linkToCallback)
+        .then(graph.splitIntro)
         //.then(graph.extractText)
-        .then(content => { res.send({body:content}); });
+        .then(content => { res.send(content); });
 });
 
 app.get('/wiki/:id/links', function (req, res) {

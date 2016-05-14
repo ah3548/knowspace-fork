@@ -33,10 +33,21 @@ function removeMetaData(body) {
         })
         .remove();
     
-    console.log($('a').attr('href'));
-    $('a').attr('href',"#?subject=" + $('a').attr('href')+"&scrollTo=Guides");
-    //$('a').attr("ng-click","appIntercept($event)");
+    $('sup').remove();
 
+    return $.root().html();
+}
+
+function linkToCallback(body) {
+    var $ = cheerio.load(body);
+    $('a').each(
+        function(i, element) {
+            var href = $(this).attr('href');
+            $(this).attr('href',"#Guides");
+            //$(this).attr('ng-href',"#");
+           $(this).attr("ng-click","appIntercept(\"" + href + "\")");
+        }
+    )
     return $.root().html();
 }
 
@@ -116,6 +127,19 @@ function removeEditLinks(body) {
     return $.root().html();
 }
 
+function splitIntro(body) {
+    $ = cheerio.load(body); 
+
+    var ps = $.root().children('p');
+    var intro = '';
+    ps.each(function(i,element) {
+        intro += '<p>'+$(this).html()+'</p>';
+    });
+    $.root().children('p').remove();
+    
+    return {intro: intro, body: $.root().html()};
+}
+
 /* Come back to at later point, not relevant right now */
 /*
 function getImportance(body, word) {
@@ -138,9 +162,17 @@ tfidf.listTerms(0).forEach(function(item) {
     .then(content => console.log(content));*/
 
 
+/*orm.getWikiEntry('Linear_Algebra')
+    .then(removeComments)
+    .then(removeMetaData)
+    .then(removeEditLinks)
+    .then(splitIntro);*/
+
 module.exports = {
     extractText,
     removeMetaData,
     removeEditLinks,
-    getAllLinks
+    linkToCallback,
+    getAllLinks,
+    splitIntro
 }

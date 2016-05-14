@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="ksApp" lang="en">
+<html lang="en">
 
 <head>
 
@@ -33,10 +33,9 @@
 
 </head>
 
-<body>
-    <div ng-view></div>
-    
-        
+<body ng-app="ksApp" ng-controller="MainCtrl">
+    <ks-page></ks-page>
+
     <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="./../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="../../node_modules/cytoscape/dist/cytoscape.min.js"></script>
@@ -53,5 +52,6 @@
     <script src="js/wikipedia.js"></script>
     <script src="js/so.js"></script>
     <script src="js/graph.js"></script>
+    <script src="js/angular-bind-html-compile.min.js"></script>
 </body>
 </html>

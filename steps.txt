@@ -10,3 +10,6 @@ To-do for Day
 Graph Linked To Analysis
 
 Submission of Questions & Answers
+
+* nicer breadcrumbs
+* animation between subject loads

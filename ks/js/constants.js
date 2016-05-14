@@ -45,9 +45,7 @@ angular.module('ksApp')
     .value('subjects', [
                 {name: "Linear_Algebra"}
             ])
-    .value('questions', [ {body: '<div></div>'}
-                
-            ])
+    .value('questions', [])
     .factory('wiki', ['$resource', function($resource) {
         return {
             get: function() {
