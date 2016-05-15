@@ -1,11 +1,14 @@
 ### Problem Statement:
-	We aim to change the way adults (>14) approach education. Many categorizations of learning styles exist and our approach is to let the user figure that out for themselves. We do this by treating learning as a "Choose Your Own Adventure" game. By simply presenting the "Knowledge Space" through a node graph visualization we give the student a map of information to grasp. Along the journey we leverage the stack overflow API and the stack overflow methodology (popularity, reputation, etc.) to present discussions around relevant topics. To drill in further we leverage Wikipedia to give clarification around complex topics.
-    The ultimate goal is that users can provide back into stack overflow their opinions, metaphors, guidance, analogies, and so much more to further improve our topic associations. For example, I was a mechanic but know nothing about linear algebra. Could some of these topics be described as how car engines operate? As our application learns more from user interaction and users' private information we can further improve how and which information we should present to users in a probabilistic way. At its core we aim to prove that yes 90% of people find describing code as cooking recipes but 10% might understand it better through karaoke song selection techniques. There are as many possibilities as people in the world are learning right now. 
+
+We aim to change the way adults (>14) approach education. Many learning styles exist and our approach is to let the user figure that out themselves. We do this by treating learning as a "Choose Your Own Adventure" game. By presenting the "Knowledge Space" through a node graph visualization we give the student a map. Along the journey we leverage the stack overflow API and the <a href="http://www.cs.cmu.edu/~dmovshov/papers/asonam_2013.pdf">StackOverflow Reputation System</a> to present discussions around relevant topics. To drill in further we leverage Wikipedia to give clarification around complex topics.
+The ultimate goal is that users can provide back into stack overflow their opinions, metaphors, guidance, analogies, and so much more to further improve our topic associations. For example, I was a mechanic but know nothing about linear algebra. Could we describe the topic in terms of how car engines operate? As our application learns more from user interaction and users' private information we can further improve how and which information we should present to users in a probabilistic way. At its core we aim to prove that yes 90% of people find describing code as cooking recipes but 10% might understand it better through karaoke song selection techniques. There are as many possibilities as people in the world are learning right now. 
 	
 ### Current Scope:
-	As a proof of concept we are going to present a use case to learn linear algebra using our tool. We are going to store user interaction information for analysis but will leave users' private information alone for now. In addition, feeding questions and answers back into stack overflow should be done at a later point.
+
+As a proof of concept we are going to present a use case to learn linear algebra using our tool. We are going to store user interaction information for analysis but will leave users' private information alone for now. In addition, feeding questions and answers back into stack overflow should be done at a later point.
     
 ### Future Works:
+
 * A key improvement would be the ability to write data back into stack overflow so that interaction is live and interactive. 
 * Stack overflow is not the be-all and end-all of subject forums, i.e. integration with reddit could improve our information repository.
 * The tool can be applied to a classroom setting.
@@ -15,16 +18,18 @@
 * The tool can be further improved with natural language processing offered by node-natural. 
 
 ### Existing Results:
-	All existing knowledge bases require pre-compiled knowledge
-	Videos/Images - prepared material
-	Teachers/Grading/Stress
+* All existing knowledge bases require pre-compiled knowledge (i.e. Khan Academy, Coursera, etc.)
+* Videos/Images - prepared material
+* Teachers/Grading/Stress
 	
 ### New Method:
-	Use existing Knowledge Base and Present in New Friendly Manner (Node Graph, Stack Overflow Conversation, and Wiki Articles)
-    Dynamically modifies content to provide non-regimented education flow
+
+Use existing Knowledge Base and Present in New Friendly Manner (Node Graph, Stack Overflow Conversation, and Wiki Articles)
+Dynamically modifies content to provide non-regimented education flow
 	
 ### Hypothesis:
-	Existing education platforms treat the pursuit of knowledge as a regimented set of steps. Unfortunately not everyone can follow the same steps but rather must pave their own path. In addition, static content with regimented steps do not motivate curiosity and creativity. Knowledge space aims to present information in an interactive dynamic way. At the core of the platform is that philosophy that we each must create our own map. Wikipedia is a good starting point but in aggregate with stack overflow we can begin challenging ourselves to find the answers. 
+
+Existing education platforms treat the pursuit of knowledge as a regimented set of steps. Unfortunately not everyone can follow the same steps but rather must pave their own path. In addition, static content with regimented steps do not motivate curiosity and creativity. Knowledge space aims to present information in an interactive dynamic way. At the core of the platform is that philosophy that we each must create our own map. Wikipedia is a good starting point but in aggregate with stack overflow we can begin challenging ourselves to find the answers. 
 
 ### Technology Stack
 | TECHNOLOGY | IMPLEMENTATION |
@@ -33,3 +38,4 @@
 | WIKIPEDIA  | <ul><li>node-wikipedia</li></ul> |
 | STACK OVERFLOW | <ul><li>stackexchange</li><li>phpmyadmin</li></ul> |
 | ORM | <ul><li>sequelize-auto</li><li>node-sequelize</li></ul> |
+| UI |  <ul><li>angularjs</li><li>bootstrap</li></ul> |
