@@ -4,13 +4,13 @@ angular.module('ksApp', ['ngResource','angular-bind-html-compile','ngCookies'])
     .config(['$sceProvider',function($sceProvider){
         $sceProvider.enabled(false);
     }])
-    .controller('MainCtrl', ['$scope', '$resource', '$document', '$rootScope', '$cookies', 'categories', 'subjects', 'zoomToolDefaults', 'cyStyle', 'questions','wiki', 'ksGraph', 'AuthenticationService',
-                             function($scope, $resource, $document, $rootScope, $cookies, categories, subjects, zoomToolDefaults, cyStyle, questions, wiki, ksGraph, AuthenticationService) {
+    .controller('MainCtrl', ['$scope', '$resource', '$document', '$rootScope', '$cookies', 'categories', 'subjects', 'zoomToolDefaults', 'cyStyle', 'qs', 'question','wiki', 'graph', 'AuthenticationService',
+                             function($scope, $resource, $document, $rootScope, $cookies, categories, subjects, zoomToolDefaults, cyStyle, qs, question, wiki, graph, AuthenticationService) {
     $scope.username = getSessionInfo('username');
     $scope.subject = getSessionInfo('subject');
-    $scope.categories = categories;
     $scope.subjects = getSessionInfo('subjects');
-    $scope.questions = questions;
+    $scope.categories = categories;
+    $scope.questions = qs;
     //$scope.password = '';
                                  
     AuthenticationService.ClearCredentials();                   
@@ -31,43 +31,45 @@ angular.module('ksApp', ['ngResource','angular-bind-html-compile','ngCookies'])
 
     $scope.initGraph = function() {
         getBaseGraph();
-        getSessionInfo('graph');
+        getSessionInfo('graph').then(function(result) {
+            console.log(result);
+            console.log("Just loaded graph");
+            console.log(getNode({title: $scope.subject}));
+            loadNewSubject();
+        });
     }
     
-    function getBaseGraph() { 
+    function getBaseGraph() {
         cy = cytoscape({
           container: $('#cy'),
-          elements: [ // list of graph elements to start with
-            { // node a
-              data: { id: subjects[0].name.replace(/_/,' ') }
-            }
-          ],
+          elements: [],
           style: cyStyle
         });
         
+        //getNode({title: subjects[0].name}).addClass("confused");
+        
         cy.on('select', 'node', function(e) {
-            this.addClass("confused");
+            console.log("node selected");
             var node = this;
             var subject = node._private.data.id;
             addSub(subject);
-            loadNewSubject(subject);
         });
         
         cy.panzoom(zoomToolDefaults);
-        
-        getWikiLinks($scope.subject);
     }
     
-    /* CY GETTERS AND SETTERS */
-    function getNode(ref) {
-        return cy.getElementById(ref.title);
+    /* CY GETTERS AND SETTERS {title:<>"} */
+                                 
+    // get node with name with subject without underscores
+    function getNode(ref) { 
+        return cy.getElementById(ref.title.replace(/_/,' ')); 
     }
 
     function getEdge(ref, prev_ref) {
         return cy.getElementById(prev_ref.title + "," + ref.title);
     }
                                  
-    function addNode(ref) { // {title:<>"}
+    function addNode(ref) {
         cy.add({
             data: {
                 id: ref.title
@@ -88,14 +90,15 @@ angular.module('ksApp', ['ngResource','angular-bind-html-compile','ngCookies'])
     /* CY FUNCTIONS */
     function updateGraph(result){
         addLinksToGraph(result);
+        getNode({title: $scope.subject}).addClass("confused"); // if selected again do not get links
         //addEdge({title: result[0].title}, {title:"Linear Algebra"});
         setGraphLayout();
         updateSessionInfo('graph');
     }
     
 
-    function addLinksToGraph(result) {
-        for (var i = 0; i < result.length && i < 3; i++) {
+    function addLinksToGraph(result) { // Placeholder for actual edge making algorithm
+        for (var i = 0; i < result.length && i < 1000; i++) {
             var ref = result[i];
             var nExists = getNode(ref);
             if (nExists.length == 0) {
@@ -122,13 +125,19 @@ angular.module('ksApp', ['ngResource','angular-bind-html-compile','ngCookies'])
             }
           });
         cy.reset();
+        cy.center(getNode({title: $scope.subject}));
     }
       
 /* END CY */
     function getSessionInfo(name) {
         var value = $cookies.getObject(name);
+        console.log("getting " + name);
         if (value == null) {
             switch(name) {
+                case "username":
+                    value = $scope.username = "Anon"+Math.floor(Math.random()*10000+1).toString();
+                    updateSessionInfo(name);
+                    break;
                 case "subject": 
                     value = subjects[0].name;
                     updateSessionInfo(name);
@@ -138,11 +147,8 @@ angular.module('ksApp', ['ngResource','angular-bind-html-compile','ngCookies'])
                     updateSessionInfo(name);
                     break;
                 case "graph": 
-                    getGraph();
-                    break;
-                case "username":
-                    value = $scope.username = "Anon"+Math.floor(Math.random()*10000+1).toString();
-                    updateSessionInfo(name);
+                    console.log("Actually getting graph");
+                    return getGraph();
                     break;
             }
         }
@@ -150,112 +156,102 @@ angular.module('ksApp', ['ngResource','angular-bind-html-compile','ngCookies'])
     }
                                  
     function updateSessionInfo(name) {
+        console.log("updating" + name);
         var value = "";
         switch(name) {
+            case "username":
             case "subject": 
-                value = subjects[subjects.length-1].name;
-                $cookies.putObject(name, value);
-                break;
-            case "subjects": 
-                value = subjects;
-                $cookies.putObject(name, value);
+            case "subjects":
+                $cookies.putObject(name, $scope[name]);
                 break;
             case "graph": 
                 saveGraph(cy.json());
                 break;
-            case "username":
-                value = $scope.username;
-                $cookies.putObject(name, value);
-                break;
         }
     }
     
-    $scope.updateBreadCrumbs = function(subject) {
-        $scope.subject = subject;
-       for (var i = 0; i < subjects.length; i++) {
-           if (subjects[i].name == subject) {
-               $scope.subjects = subjects.slice(0,i+1);
+    $scope.updateBreadCrumbs = function(clickedSubject) {
+        $scope.subject = clickedSubject;
+
+        for (var i = 0; i < $scope.subjects.length; i++) {
+           if ($scope.subjects[i].name == $scope.subject) {
+               $scope.subjects = $scope.subjects.slice(0,i+1);
                break;
            }
-       }
+        }
+        loadNewSubject();
+    }
+    
+    // GRAPH SHOULD BE LOADED BEFORE THIS FUNCTION IS CALLED
+    function loadNewSubject() {
+        console.log("loading " + $scope.subject);
         updateSessionInfo('subject');
         updateSessionInfo('subjects');
-        loadNewSubject(subject);
-    }
-                                 
-    function loadNewSubject(subject) {
-        getSO(subject);
-        getWiki(subject);
-        getWikiLinks(subject);
+        getSO();
+        getWiki();
+        console.log(getNode({title: $scope.subject}));
+        //console.log(getNode({title: $scope.subject}));
+        var visited = getNode({title: $scope.subject}).hasClass('confused');
+        console.log(visited);
+        if (!visited) {
+            //getWikiLinks();
+        }
     }
 
     function addSub(subject) {
-        $scope.subject=subject;
+        $scope.subject=subject;        
         var contains = false;
-        console.log(subject);
         $scope.subjects.forEach(function(element) {
-            console.log(element.name);
             if (element.name == subject) {
                 contains = true;
             }
         });
         if (!contains) {
             $scope.subjects.push({name:subject});
-            updateSessionInfo('subjects', subjects);
         }
-        updateSessionInfo('subject', subject);
+        loadNewSubject();
     }
 
     $scope.appIntercept = function (linkPath) {
         var rPath = linkPath.split('/');
         addSub(rPath[2]);
-        loadNewSubject(rPath[2]);
     }
                                  
     // ################### SERVICES ############################## 
     function getWiki(subject) { 
-        wiki.get().query({subject:subject}).$promise.then(function(article) {
+        var article = wiki.get();
+        article.query({subject:$scope.subject}).$promise.then(function(article) {
             $scope.article=article;
         });
     }
-    getWiki(subjects[0].name);
 
     function getWikiLinks(subject) {
-        var links = $resource("http://localhost:3000/wiki/:subject/links",
-                                  {subject:'@subject'},
-                                  {query: {method: 'get', isArray:true}});
-        return links.query({subject:subject}).$promise.then(function(ls) {
+        var links = wiki.getLinks();
+        links.query({subject:$scope.subject}).$promise.then(function(ls) {
+            ls.unshift({
+                title: $scope.subject.replace(/_/,' ')
+            });
             updateGraph(ls);
         });
     }
 
     function getSO(subject) {
-        var questions = $resource("http://localhost:3000/so/questions/:subject",
-                                  {subject:'@subject'},
-                                  {query: {method: 'get', isArray:true}});
-        questions.query({subject:subject}).$promise.then(function(qs) {
-          $scope.questions = qs;
+        question.query({subject:$scope.subject}).$promise.then(function(result) {
+          $scope.questions = result;
         });
-    }
-    getSO(subjects[0].name); 
-                                 
-     
-    var sp = $resource("http://localhost:3000/user/graph/",        
-            {username:'@username'}, {
-            query: {method: "GET"},
-            update: {method: "POST"}
-    });
-     
+    }                                 
+          
     function getGraph() {
-        sp.query({username: $scope.username}).$promise.then(function(graph) {
-          cy.json(graph);
+        return graph.query({username: $scope.username}).$promise.then(function(graph) {
+            console.log("Num nodes pulled: " + graph.elements.nodes.length);
+            cy.json(graph);
+            return graph;
         });
     }
-    function saveGraph(graph) {
-        
-        sp.update({}, {username: $scope.username, graph: graph}).$promise.then(function(result) {
-          console.log(result);
-        });
+                                 
+    function saveGraph(graphMetaData) {
+        console.log("saving graph");
+        graph.update({}, {username: $scope.username, graph: graphMetaData});
     }
                             
 }])
@@ -264,122 +260,7 @@ angular.module('ksApp', ['ngResource','angular-bind-html-compile','ngCookies'])
     templateUrl: 'view/view.html',
       replace: true
   };
-})
-.factory('ksGraph', [ '$q', 'cyStyle', 'subjects', function( $q, cyStyle, subjects){
-  var cy;
-  var ksGraph = function(k){
-    var deferred = $q.defer();
-    
-    /*// put people model in cy.js
-    var eles = [];
-    for( var i = 0; i < people.length; i++ ){
-      eles.push({
-        group: 'nodes',
-        data: {
-          id: people[i].id,
-          weight: people[i].weight,
-          name: people[i].name
-        }
-      });
-    }*/
-    
-    $(function(){ // on dom ready
-      cy = cytoscape({
-          container: $('#cy'),
-          elements: [ // list of graph elements to start with
-            { // node a
-              data: { id: subjects[0].name.replace(/_/,' ') }
-            }
-          ],
-          style: cyStyle,
-          ready: function(){
-              deferred.resolve( this );
-          }
-      });
-      /*cy = cytoscape({
-        container: $('#cy'),
-        
-        style: cytoscape.stylesheet()
-          .selector('node')
-            .css({
-              'content': 'data(name)',
-              'height': 80,
-              'width': 'mapData(weight, 1, 200, 1, 200)',
-               'text-valign': 'center',
-                'color': 'white',
-                'text-outline-width': 2,
-                'text-outline-color': '#888'
-             })
-          .selector('edge')
-            .css({
-              'target-arrow-shape': 'triangle'
-            })
-          .selector(':selected')
-            .css({
-              'background-color': 'black',
-              'line-color': 'black',
-              'target-arrow-color': 'black',
-              'source-arrow-color': 'black',
-              'text-outline-color': 'black'
-          }),
-
-        layout: {
-          name: 'cose',
-          padding: 10
-        },
-        
-        elements: eles,
-
-        ready: function(){
-          deferred.resolve( this );
-          
-          cy.on('cxtdrag', 'node', function(e){
-            var node = this;
-            var dy = Math.abs( e.cyPosition.x - node.position().x );
-            var weight = Math.round( dy*2 );
-            
-            node.data('weight', weight);
-            
-            fire('onWeightChange', [ node.id(), node.data('weight') ]);
-          });
-        }
-      });*/
-
-    }); // on dom ready
-    
-    return deferred.promise;
-  };
-  
-  /*peopleGraph.listeners = {};
-  
-  function fire(e, args){
-    var listeners = peopleGraph.listeners[e];
-    
-    for( var i = 0; listeners && i < listeners.length; i++ ){
-      var fn = listeners[i];
-      
-      fn.apply( fn, args );
-    }
-  }
-  
-  function listen(e, fn){
-    var listeners = peopleGraph.listeners[e] = peopleGraph.listeners[e] || [];
-    
-    listeners.push(fn);
-  }
-  
-  peopleGraph.setPersonWeight = function(id, weight){
-    cy.$('#' + id).data('weight', weight);
-  };
-  
-  peopleGraph.onWeightChange = function(fn){
-    listen('onWeightChange', fn);
-  };*/
-  
-  return ksGraph;
-  
-  
-} ]);;
+});
 
 
 

@@ -4,6 +4,7 @@ angular.module('ksApp')
                 {title:"Map"},
                 {title:"Guides"}
               ])
+    .constant('BASEURL', "http://localhost:3000")
     .constant('zoomToolDefaults', {
                   zoomFactor: 0.05, // zoom factor per zoom tick
                   zoomDelay: 45, // how many ms between zoom ticks
@@ -51,20 +52,11 @@ angular.module('ksApp')
     .value('subjects', [
                 {name: "Linear_Algebra"}
             ])
-    .value('questions', [])
+    .value('qs', [])
     .value('emojis', {
             confused: 'http://www.emoji-cheat-sheet.com/graphics/emojis/confused.png',
             satisfied: 'http://www.emoji-cheat-sheet.com/graphics/emojis/satisfied.png'        
           })
-    .factory('wiki', ['$resource', function($resource) {
-        return {
-            get: function() {
-                return $resource("http://localhost:3000/wiki/:subject",
-                                  {subject:'@subject'},
-                                  {query: {method: 'get', isArray:false}});
-            }
-        }
-    }]);
             
 
 

@@ -159,7 +159,7 @@ var badSections = [
     "Further_reading",
     "Notes",
     "References",
-    "See_Also"
+    "See_also"
 ];
 
 function isBadRef() {
