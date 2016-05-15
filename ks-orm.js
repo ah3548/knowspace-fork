@@ -15,7 +15,7 @@ var sequelize = new Sequelize('mysql://root:root@localhost:3306/ks', {logging:fa
 var Wiki = sequelize.import("./models/wikipedia");
 var SOqs = sequelize.import("./models/so_questions");
 var SOas = sequelize.import("./models/so_answers");
-
+var UG = sequelize.import("./models/usergraphs");
 
 function createWikiEntry(entry) {
     return Wiki.create(entry).then(function(wiki) {
@@ -119,6 +119,21 @@ function getAnswer(answer_id) {
     });
 }
 
+function getUserGraph(username) {
+    return UG.findAll({
+        where: {
+            username: username
+        }
+    }).then(function(userGraph) {
+        if (userGraph != undefined && userGraph[0] != undefined) {
+            return userGraph[0].dataValues.graph.toString('utf-8');
+        }
+        else {
+            throw new Error("username " + username + " doesnt exist in the database, inserting now..");
+        }
+    });
+}
+
 function insertQuestion(entry) {
     return SOqs.create(entry).then(function(question) {
         return question;
@@ -130,6 +145,14 @@ function insertQuestion(entry) {
 function insertAnswer(entry) {
     return SOas.create(entry).then(function(answers) {
         return answers;
+    }).catch(function(error) {
+        console.log("Error inserting record in database" + error);
+    });
+}
+
+function updateUserGraph(entry) {
+    return UG.upsert(entry).then(function(usergraph) {
+        return usergraph;
     }).catch(function(error) {
         console.log("Error inserting record in database" + error);
     });
@@ -146,5 +169,6 @@ module.exports = {
     getQuestion,
     getAllQuestions,
     getAnswer,
-    insertAnswer
+    getUserGraph,
+    updateUserGraph
 }

@@ -1,6 +1,6 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
-    cookieParser = require('cookie-parser'),
+    //cookieParser = require('cookie-parser'),
     wiki = require('./ks-wiki'),
     so = require('./ks-so'),
     orm = require('./ks-orm'),
@@ -123,17 +123,27 @@ function getQuestions(subject) {
 }
 
 app.use(bodyParser.json());
-app.use(cookieParser());
+//app.use(cookieParser());
 
 app.post('/login', function (req, res) {
     console.log(req.body);
-    console.log(req.cookies);
     res.send('');
 });
 
-app.post('/saveProgress', function (req, res) {
-    console.log(req.body);
-    console.log(req.cookies);
+app.get('/user/graph', function (req, res) {
+    var userGraph = req.query.username;
+    orm.getUserGraph(userGraph).then(
+        function(graph) {
+            res.send(graph);
+        }
+    );
+});
+
+
+app.post('/user/graph', function (req, res) {
+    var userGraph = req.body;
+    userGraph.graph = JSON.stringify(userGraph.graph);
+    orm.updateUserGraph(userGraph);
     res.send('');
 });
 

@@ -6,7 +6,7 @@ angular.module('ksApp', ['ngResource','angular-bind-html-compile','ngCookies'])
     }])
     .controller('MainCtrl', ['$scope', '$resource', '$document', '$rootScope', '$cookies', 'categories', 'subjects', 'zoomToolDefaults', 'cyStyle', 'questions','wiki', 'ksGraph', 'AuthenticationService',
                              function($scope, $resource, $document, $rootScope, $cookies, categories, subjects, zoomToolDefaults, cyStyle, questions, wiki, ksGraph, AuthenticationService) {
-    $scope.username = '';
+    $scope.username = getSessionInfo('username');
     $scope.subject = getSessionInfo('subject');
     $scope.categories = categories;
     $scope.subjects = getSessionInfo('subjects');
@@ -31,7 +31,7 @@ angular.module('ksApp', ['ngResource','angular-bind-html-compile','ngCookies'])
 
     $scope.initGraph = function() {
         getBaseGraph();
-       cy.json(getSessionInfo('graph'));
+        getSessionInfo('graph');
     }
     
     function getBaseGraph() { 
@@ -131,15 +131,18 @@ angular.module('ksApp', ['ngResource','angular-bind-html-compile','ngCookies'])
             switch(name) {
                 case "subject": 
                     value = subjects[0].name;
-                    updateSessionInfo(name, value);
+                    updateSessionInfo(name);
                     break;
                 case "subjects": 
                     value = subjects;
-                    updateSessionInfo(name, value);
+                    updateSessionInfo(name);
                     break;
                 case "graph": 
-                    value = cy.json();
-                    saveProgress($scope.username, value);
+                    getGraph();
+                    break;
+                case "username":
+                    value = $scope.username = "Anon"+Math.floor(Math.random()*10000+1).toString();
+                    updateSessionInfo(name);
                     break;
             }
         }
@@ -158,11 +161,13 @@ angular.module('ksApp', ['ngResource','angular-bind-html-compile','ngCookies'])
                 $cookies.putObject(name, value);
                 break;
             case "graph": 
-                value = cy.json();
-                saveProgress($scope.username, value);
+                saveGraph(cy.json());
+                break;
+            case "username":
+                value = $scope.username;
+                $cookies.putObject(name, value);
                 break;
         }
-        console.log(value);
     }
     
     $scope.updateBreadCrumbs = function(subject) {
@@ -234,13 +239,21 @@ angular.module('ksApp', ['ngResource','angular-bind-html-compile','ngCookies'])
     }
     getSO(subjects[0].name); 
                                  
-                                 
-    function saveProgress(graph) {
-        var SP = $resource("http://localhost:3000/saveProgress",
-                          {},
-                          {save: {method: 'post', params: {username: $scope.username, graph: graph}}});
-        var sp = new SP();
-        sp.$save().then(function(result) {
+     
+    var sp = $resource("http://localhost:3000/user/graph/",        
+            {username:'@username'}, {
+            query: {method: "GET"},
+            update: {method: "POST"}
+    });
+     
+    function getGraph() {
+        sp.query({username: $scope.username}).$promise.then(function(graph) {
+          cy.json(graph);
+        });
+    }
+    function saveGraph(graph) {
+        
+        sp.update({}, {username: $scope.username, graph: graph}).$promise.then(function(result) {
           console.log(result);
         });
     }
