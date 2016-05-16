@@ -11,6 +11,7 @@
                 <ol class="navbar-brand breadcrumb" style="margin-top:10px; margin-bottom:0px;">
                     <li ng-repeat="s in subjects">
                         <a href="" ng-click="updateBreadCrumbs(s.name)">{{s.name}}</a>
+                        <i style="cursor:pointer" ng-class="{'twa twa-thumbsup': liked, 'twa twa-confused': !liked}" ng-click="liked=!liked"></i>
                     </li>
                 </ol>
             </div> 

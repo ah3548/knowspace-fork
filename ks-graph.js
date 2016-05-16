@@ -83,7 +83,8 @@ function getAllLinks(body) {
         var t = $(link).text(),
             l = $(link).attr('href');
         if (l.indexOf('/wiki/') != -1 &&
-            t !== 'ISBN') { 
+            t !== 'ISBN' &&
+            t != '') { 
             result.push(
                 {title:t, link:l}
             );
