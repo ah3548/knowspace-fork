@@ -134,9 +134,9 @@ angular.module('ksApp', ['ngResource', 'angular-bind-html-compile', 'ngCookies']
                     }
                 });
                 cy.reset();
-                cy.center(getNode({
+                /*cy.center(getNode({
                     title: $scope.subject
-                }));
+                }));*/
             }
 
             /* END CY */

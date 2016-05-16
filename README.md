@@ -7,20 +7,21 @@ The ultimate goal is that users can provide back into stack overflow their opini
 
 As a proof of concept we are going to present a use case to learn linear algebra using our tool. We are going to store user interaction information for analysis but will leave users' private information alone for now. In addition, feeding questions and answers back into stack overflow should be done at a later point.
     
-### Future Works:
+### Future Works/Lessons Learned:
 
 * A key improvement would be the ability to write data back into stack overflow so that interaction is live and interactive. 
 * Stack overflow is not the be-all and end-all of subject forums, i.e. integration with reddit could improve our information repository.
-* The tool can be applied to a classroom setting.
+* The tool can be applied to a classroom setting where teachers are experts guiding students along their journey.
 * Gamification of tool can further improve motivation, i.e. awarding badges.
 * Further research can be done on stack overflow question and answer owners.
 * Non-text based information (i.e. images) can be cataloged as well.
 * The tool can be further improved with natural language processing offered by node-natural. 
 
 ### Existing Results:
-* All existing knowledge bases require pre-compiled knowledge (i.e. Khan Academy, Coursera, etc.)
-* Videos/Images - prepared material
-* Teachers/Grading/Stress
+* All existing knowledge bases require pre-compiled knowledge (i.e. Khan Academy, Coursera, etc.) created by paid content creators. The summarize, compile, and pre-prescribe a regimented path.
+* Khan Academy tried a similar <a href="https://www.khanacademy.org/exercisedashboard">Exercise Dashboard</a> but simply as a tie in to their existing platform rather than proposing topic relationship.
+* Slides/Videos/Images - all prepared material
+* Teachers/Grading/Stress - This platform is for learning for the sake of learning
 	
 ### New Method:
 
@@ -39,3 +40,7 @@ Existing education platforms treat the pursuit of knowledge as a regimented set 
 | STACK OVERFLOW | <ul><li>stackexchange</li><li>phpmyadmin</li></ul> |
 | ORM | <ul><li>sequelize-auto</li><li>node-sequelize</li></ul> |
 | UI |  <ul><li>angularjs</li><li>bootstrap</li></ul> |
+
+### Link to Demo
+
+[![Alt text for your video](http://img.youtube.com/vi/9NDBHs4vHJU/0.jpg)](http://www.youtube.com/watch?v=9NDBHs4vHJU)
