@@ -1,0 +1,20 @@
+https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-elasticsearch-on-ubuntu-14-04
+
+http://js.cytoscape.org/#introduction/packages
+
+collapse wikipedia sections
+breadcrumbs clicking
+Capture User Input
+
+To-do for Day
+Graph Linked To Analysis
+
+Submission of Questions & Answers
+
+* nicer breadcrumbs
+* animation between subject loads
+* save usergraph sql
+
+http://icecreamapps.com/Screen-Recorder/
+
+[![Alt text for your video](http://img.youtube.com/vi/lZzmU5nykVU/0.jpg)](http://www.youtube.com/watch?v=lZzmU5nykVU)
