@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-# knowspace-fork
+# knowspace
 =======
 ### Problem Statement:
 
@@ -8,10 +7,10 @@ The ultimate goal is that users can provide back into stack overflow their opini
 	
 ### Current Scope:
 
-As a proof of concept we are going to present a use case to learn linear algebra using our tool. We are going to store user interaction information for analysis but will leave users' private information alone for now. In addition, feeding questions and answers back into stack overflow should be done at a later point.
+As a proof of concept we are going to present a use case to learn linear algebra using our tool. 
+We are going to use elastic search to determine topic relationships.
     
-### Future Works/Lessons Learned:
-
+### Future Scope:
 * A key improvement would be the ability to write data back into stack overflow so that interaction is live and interactive. 
 * Stack overflow is not the be-all and end-all of subject forums, i.e. integration with reddit could improve our information repository.
 * The tool can be applied to a classroom setting where teachers are experts guiding students along their journey.
@@ -47,4 +46,3 @@ Existing education platforms treat the pursuit of knowledge as a regimented set 
 ### Link to Demo
 
 [![Alt text for your video](http://img.youtube.com/vi/9NDBHs4vHJU/0.jpg)](http://www.youtube.com/watch?v=9NDBHs4vHJU)
->>>>>>> 1b1dc5faa52980b0593b701ea11682543ef94efb
