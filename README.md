@@ -1,5 +1,5 @@
 # knowspace
-=======
+
 ### Problem Statement:
 
 We aim to change the way adults (>14) approach education. Many learning styles exist and our approach is to let the user figure that out themselves. We do this by treating learning as a "Choose Your Own Adventure" game. By presenting the "Knowledge Space" through a node graph visualization we give the student a map. Along the journey we leverage the stack overflow API and the <a href="http://www.cs.cmu.edu/~dmovshov/papers/asonam_2013.pdf">StackOverflow Reputation System</a> to present discussions around relevant topics. To drill in further we leverage Wikipedia to give clarification around complex topics.
