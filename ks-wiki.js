@@ -1,24 +1,38 @@
 var wikipedia = require("node-wikipedia"),
-    orm = require("./ks-orm");
+    orm = require("./ks-orm"),
+    winston = require('winston');
 
 var getText = function (response) {
     return response.text['*'].toString();
 }
 
-function getWiki(subject) {
-    return new Promise(function(resolve, reject) {
-        wikipedia.page.data(
-            subject, 
-            { content: true }, 
-            resolve
-        );
-    })
-    .then(
-        function(resolve, reject) {
-           return getText(resolve);
-        }
-    ).catch(error => { throw new Error("Subject Does Not Exist"); });
-}
+function getWiki(page, onlySummary) {
+    var request = require('request-promise-native'),
+        urlparse = require('url'),
+        params = {
+            action: "query",
+            titles: page.replace(/[-]/g, '_'),
+            format: 'json',
+            prop: 'extracts',
+            explaintext: '',
+            indexpageids: '',
+            redirects: ''
+
+        };
+    if (onlySummary) {
+        params.exintro ='';
+    }
+    var url = "http://en.wikipedia.org/w/api.php" + urlparse.format({ query: params });
+    winston.info(url);
+    return request({
+            uri: url,
+            json: true
+        }).then( (body) => {
+            var article = body.query.pages[body.query.pageids[0]].extract;
+            return article;
+        });
+};
+
 
 function setWiki(subject, content) {
     return orm.createWikiEntry(
@@ -60,7 +74,7 @@ function getWikiEntry(subject) {
         .catch(error => { return error.message });
 }
 
-exports = module.exports = { getWikiEntry };
+exports = module.exports = { getWiki, getWikiEntry };
 
 
 /*
