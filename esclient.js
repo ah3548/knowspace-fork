@@ -1,10 +1,37 @@
-var wikipedia = require("./ks-wiki");
+//var wikipedia = require("./ks-wiki");
 
 var elasticsearch = require('elasticsearch');
 var client = new elasticsearch.Client({
   host: 'localhost:9200',
   //log: 'trace'
 });
+
+function putArticle(article) {
+    return client.index({
+        index: 'wiki',
+        type: 'document',
+        id: article.title,
+        body: article
+    });
+}
+function getArticle(title) {
+    return client.search({
+        "index":"wiki",
+        "type":"document",
+        "body": {
+            "query": {
+                "query_string": {
+                    "query": title,
+                    "fields": ["title"]
+                }
+            }
+        }
+    }).then((result) => {
+        return result.hits.hits[0]._source;
+    });
+}
+
+exports = module.exports = { getArticle, putArticle };
 
 /*client.ping({
     // ping usually has a 3000ms timeout
@@ -15,9 +42,8 @@ var client = new elasticsearch.Client({
     } else {
         console.log('All is well');
     }
-});*/
+});
 
-title = "Linear_Algebra"
 wikipedia.getWiki(title)
     .then( (result) => {
         client.index({
@@ -56,4 +82,4 @@ client.search({
     console.log(hits);
 }, function (err) {
     console.trace(err.message);
-});
+});*/

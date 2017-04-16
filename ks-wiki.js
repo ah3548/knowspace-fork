@@ -1,12 +1,29 @@
 var wikipedia = require("node-wikipedia"),
     orm = require("./ks-orm"),
-    winston = require('winston');
+    winston = require('winston'),
+    es = require('./esclient');
 
-var getText = function (response) {
-    return response.text['*'].toString();
+function getWikiHtml(subject) {
+    return new Promise(function(resolve, reject) {
+        wikipedia.page.data(
+            subject,
+            {content: true},
+            resolve
+        );
+    })
+    .catch(error => { throw new Error("Subject Does Not Exist"); })
+    .then( (response, reject) => {
+        return {
+            title: response.title,
+            body: response.text['*'].toString(),
+            links: response.links
+                .map( (e) => { return e['*']; })
+                .filter( (e) => { return !e.includes("Template:"); })
+        };
+    });
 }
 
-function getWiki(page, onlySummary) {
+function getWikiText(page, onlySummary) {
     var request = require('request-promise-native'),
         urlparse = require('url'),
         params = {
@@ -33,18 +50,28 @@ function getWiki(page, onlySummary) {
         });
 };
 
-
-function setWiki(subject, content) {
-    return orm.createWikiEntry(
-        {
-            subject:subject, 
-            content:content
-        }
-    ).then(
-        function(wiki) {
-            return wiki.content;
-        }
-    );
+function getWiki(subject) {
+    return es.getArticle(subject)
+        .then ((response) => {
+            return response;
+        })
+        .catch(() => {
+            var wikiPromises = [
+                getWikiHtml(subject),
+                getWikiText(subject)
+            ];
+            return Promise.all(wikiPromises).then((subjectResponse) => {
+                var article = {
+                    title: subjectResponse[0].title,
+                    html: subjectResponse[0].body,
+                    links: subjectResponse[0].links,
+                    text: subjectResponse[1]
+                };
+                return es.putArticle(article).then(() => {
+                    return article;
+                });
+            });
+        });
 }
 
 function getStoredWiki(subject) {
@@ -57,6 +84,19 @@ function notAvailabeGetFromWeb(error) {
         function(content) {
             console.log("Inserting wikipedia entry into database");
             return setWiki(error.subject, content);
+        }
+    );
+}
+
+function setWiki(subject, content) {
+    return orm.createWikiEntry(
+        {
+            subject:subject,
+            content:content
+        }
+    ).then(
+        function(wiki) {
+            return wiki.content;
         }
     );
 }
@@ -77,6 +117,7 @@ function getWikiEntry(subject) {
 exports = module.exports = { getWiki, getWikiEntry };
 
 
+//getWiki('Linear Algebra').then(response => console.log(response) );
 /*
 wikipedia.revisions.all("Miles_Davis", { comment: true }, function(response) {
 	// info on each revision made to Miles Davis' page
