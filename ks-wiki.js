@@ -4,23 +4,37 @@ var wikipedia = require("node-wikipedia"),
     es = require('./esclient');
 
 function getWikiHtml(subject) {
-    return new Promise(function(resolve, reject) {
-        wikipedia.page.data(
-            subject,
-            {content: true},
-            resolve
-        );
-    })
-    .catch(error => { throw new Error("Subject Does Not Exist"); })
-    .then( (response, reject) => {
-        return {
-            title: response.title,
-            body: response.text['*'].toString(),
-            links: response.links
-                .map( (e) => { return e['*']; })
-                .filter( (e) => { return !e.includes("Template:"); })
-        };
-    });
+    var request = require('request-promise-native'),
+        urlparse = require('url'),
+        params = {
+                action: "parse", 
+                page: subject.replace(/[-]/g, '_'),
+                prop:  "text|links",
+                format: 'json',
+                redirects: true,
+                noimages: true,
+                disabletoc: true,
+                disableeditsection: true,
+                disablelimitreport: true
+        },
+        url = "http://en.wikipedia.org/w/api.php" + urlparse.format({ query: params });
+        console.log(url);
+    
+    return request({
+            uri: url,
+            json: true
+        })
+        .catch(error => { throw new Error("Subject Does Not Exist"); })
+        .then( (response) => {
+            response = response.parse;
+            return {
+                title: response.title,
+                body: response.text['*'].toString(),
+                links: response.links
+                    .map( (e) => { return e['*']; })
+                    .filter( (e) => { return !/.*:.*/.test(e); })
+            };
+        });
 }
 
 function getWikiText(page, onlySummary) {
@@ -53,6 +67,7 @@ function getWikiText(page, onlySummary) {
 function getWiki(subject) {
     return es.getArticle(subject)
         .then ((response) => {
+            winston.info("Found (" + response.title + ") with alias " + subject + " in ES");
             return response;
         })
         .catch(() => {
@@ -65,11 +80,33 @@ function getWiki(subject) {
                     title: subjectResponse[0].title,
                     html: subjectResponse[0].body,
                     links: subjectResponse[0].links,
-                    text: subjectResponse[1]
+                    text: subjectResponse[1],
+                    akas: []
                 };
-                return es.putArticle(article).then(() => {
-                    return article;
-                });
+                if (article.title != subject) {
+                    article.akas.push(subject);
+                }
+                return es.getArticle(article.title)
+                    .then((response) => {
+                        winston.info("Found (" + article.title + ") with alias new alias " + subject);
+                        if (!response.akas.includes(subject)) {
+                            return es.updateArticle(response.title, { akas: subject })
+                                .then(() => { return article; });
+                        }
+                        else {
+                            return Promise.resolve(article);
+                        }
+                    })
+                    .catch((resolve) => {
+                        return es.putArticle(article)
+                            .then(() => {
+                                winston.info("New (" + article.title + ") with alias " + subject);
+                                return article;
+                            })
+                            .catch((err) => {
+                                winston.error(err);
+                            });
+                    });
             });
         });
 }
@@ -116,8 +153,10 @@ function getWikiEntry(subject) {
 
 exports = module.exports = { getWiki, getWikiEntry };
 
+//getWiki("Cauchy–Schwarz inequality").then((response)=> console.log(response));
+//getWiki('Abelian group').then(response => console.log(response) );
+//getWiki("Characteristic value").then((response)=> console.log(response));
 
-//getWiki('Linear Algebra').then(response => console.log(response) );
 /*
 wikipedia.revisions.all("Miles_Davis", { comment: true }, function(response) {
 	// info on each revision made to Miles Davis' page

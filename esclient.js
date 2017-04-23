@@ -11,9 +11,23 @@ function putArticle(article) {
         index: 'wiki',
         type: 'document',
         id: article.title,
-        body: article
+        body: article,
     });
 }
+
+function updateArticle(title, update) {
+    console.log(title + " " + update);
+    return client.update({
+        index: 'wiki',
+        type: 'document',
+        id: title,
+        script : "ctx._source.akas+=akas",
+        params: {
+            akas: update.akas
+        }
+    })
+}
+
 function getArticle(title) {
     return client.search({
         "index":"wiki",
@@ -22,7 +36,7 @@ function getArticle(title) {
             "query": {
                 "query_string": {
                     "query": title,
-                    "fields": ["title"]
+                    "fields": ["title","akas"]
                 }
             }
         }
@@ -31,7 +45,69 @@ function getArticle(title) {
     });
 }
 
-exports = module.exports = { getArticle, putArticle };
+function getMoreLikeThis(title, numLike) {
+    return client.search({
+        "index":"wiki",
+        "type":"document",
+        "body": {
+            "query": {
+                "more_like_this" : {
+                    "fields" : ["title","text"],
+                    "like" : [{
+                        "_index" : "wiki",
+                        "_type" : "document",
+                        "_id" : title
+                    }],
+                    "min_term_freq" : 1,
+                    "min_doc_freq": 1,
+                    "max_query_terms" : 10000
+                }
+            },
+            "size": numLike
+        }
+    }).then(function (resp) {
+        var hits = resp.hits.hits;
+        return hits.map((e) => {
+            var obj = e._source;
+            obj["score"] = e._score;
+            return obj;
+        });
+    }, function (err) {
+        console.trace(err.message);
+    });
+}
+
+// Write Test for This
+//getArticle("Cauchy–Schwarz inequality").then((response)=> console.log(response));
+//getArticle("Characteristic value").then((response)=> console.log(response));
+
+function getGraph(root, edges) {
+    if (!edges.hasOwnProperty(root)) {
+        return getMoreLikeThis(root, 5)
+            .then((response) => {
+                var nodeA = root, nodeBs = [];
+                if (!edges.hasOwnProperty(nodeA)) {
+                    edges[nodeA] = {};
+                }
+                response.forEach((e) => {
+                    var nodeB = e.title;
+                    if (!edges.hasOwnProperty(nodeB) || !edges[nodeB].hasOwnProperty(nodeA)) {
+                        edges[nodeA][nodeB] = e.score;
+                        nodeBs.push(nodeB);
+                    }
+                })
+                return nodeBs;
+            }).then((nodes) => {
+                var promises = []
+                nodes.forEach((nodeA) => {
+                    promises.push( getGraph(nodeA, edges) );
+                });
+                return Promise.all(promises);
+            });
+    }
+}
+
+exports = module.exports = { getArticle, putArticle, updateArticle, getMoreLikeThis, getGraph };
 
 /*client.ping({
     // ping usually has a 3000ms timeout

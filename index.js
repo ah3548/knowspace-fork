@@ -25,13 +25,15 @@ function getWikiArticles(subject, articles, breadth, depth) {
                     }
                 })
 }
+
+
+
 var title = "Linear Algebra";
 var articles = {};
-getWikiArticles(title,articles, 4, 3).then((articles) => {
+getWikiArticles(title, articles, 150, 2).then((articles) => {
     //console.log(response);
     for (var art in articles) {
         console.log(articles[art].title);
     }
 });
-
 
