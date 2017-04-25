@@ -236,16 +236,16 @@ angular.module('ksApp', ['ngResource', 'angular-bind-html-compile', 'ngCookies']
 
             // ################### SERVICES ############################## 
             function getWiki(subject) {
-                var article = wiki.get();
+                /*var article = wiki.get();
                 article.query({
                     subject: $scope.subject
                 }).$promise.then(function (article) {
                     $scope.article = article;
-                });
+                });*/
             }
 
             function getWikiLinks(subject) {
-                var links = wiki.getLinks();
+                /*var links = wiki.getLinks();
                 links.query({
                     subject: $scope.subject
                 }).$promise.then(function (ls) {
@@ -253,19 +253,24 @@ angular.module('ksApp', ['ngResource', 'angular-bind-html-compile', 'ngCookies']
                         title: uToS($scope.subject)
                     });
                     updateGraph(ls);
-                });
+                });*/
             }
 
             function getSO(subject) {
-                question.query({
+                /*question.query({
                     subject: $scope.subject
                 }).$promise.then(function (result) {
                     $scope.questions = result;
-                });
+                });*/
             }
 
             function getGraph() {
                 return graph.query({
+                    title: $scope.subject.replace('_',' ')
+                }).$promise.then(function(graph) {
+                    console.log(graph);
+                });
+                /*return graph.query({
                     username: $scope.username
                 }).$promise.then(function (graph) {
                     if (graph != null) {
@@ -275,15 +280,15 @@ angular.module('ksApp', ['ngResource', 'angular-bind-html-compile', 'ngCookies']
                         cy.json(graph);
                         return graph;
                     }
-                });
+                });*/
             }
 
             function saveGraph(graphMetaData) {
                 console.log("saving graph");
-                graph.update({}, {
+                /*graph.update({}, {
                     username: $scope.username,
                     graph: graphMetaData
-                });
+                });*/
             }
 
 }])

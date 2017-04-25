@@ -89,7 +89,7 @@ function getWiki(subject) {
                 return es.getArticle(article.title)
                     .then((response) => {
                         winston.info("Found (" + article.title + ") with alias new alias " + subject);
-                        if (!response.akas.includes(subject)) {
+                        if (response.akas && !response.akas.includes(subject)) {
                             return es.updateArticle(response.title, { akas: subject })
                                 .then(() => { return article; });
                         }
@@ -97,7 +97,7 @@ function getWiki(subject) {
                             return Promise.resolve(article);
                         }
                     })
-                    .catch((resolve) => {
+                    .catch((error) => {
                         return es.putArticle(article)
                             .then(() => {
                                 winston.info("New (" + article.title + ") with alias " + subject);

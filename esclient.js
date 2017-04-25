@@ -1,17 +1,20 @@
 //var wikipedia = require("./ks-wiki");
 
-var elasticsearch = require('elasticsearch');
-var client = new elasticsearch.Client({
-  host: 'localhost:9200',
-  //log: 'trace'
-});
+var elasticsearch = require('elasticsearch'),
+    client = new elasticsearch.Client({
+      host: 'localhost:9200',
+      //log: 'trace'
+    }),
+    winston = require('winston');
 
 function putArticle(article) {
-    return client.index({
+    return client.create({
         index: 'wiki',
         type: 'document',
         id: article.title,
         body: article,
+    }).catch((error) => {
+        winston.log(error);
     });
 }
 
@@ -41,7 +44,15 @@ function getArticle(title) {
             }
         }
     }).then((result) => {
-        return result.hits.hits[0]._source;
+        if (result.hits.hits.length > 0) {
+            return result.hits.hits[0]._source;
+        }
+        else {
+            throw new Error("Could not find article: " + title);
+        }
+    }).catch((error) => {
+        winston.error(error);
+        throw new Error("Could not find article: " + title);
     });
 }
 
