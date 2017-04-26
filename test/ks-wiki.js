@@ -38,14 +38,27 @@ describe("index", function() {
     });
 
     describe.only("getWiki", function() {
+        it("Coordinate system", function() {
+            return wiki.getWiki('Coordinate system', false)
+                .then((result) => {
+                    console.log(result);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        });
+    });
+
+
+    describe("getWiki", function() {
         it("Linear Algebra and Links", function() {
             this.timeout(60000);
             var articles = [];
-            return wiki.getWiki('Linear Algebra', false)
+            return wiki.getWiki('Linear Algebra')
                 .then((result) => {
                     articles.push(result);
                     var links = [];
-                    result.links.splice(0,100).forEach((link) => {
+                    result.links.splice(0,50).forEach((link) => {
                         links.push(wiki.getWiki(link));
                     })
                     return Promise.all(links);

@@ -9,26 +9,52 @@ var elasticsearch = require('elasticsearch'),
 
 function putArticle(article) {
     return client.create({
-        index: 'wiki',
-        type: 'document',
-        id: article.title,
-        body: article,
-    }).catch((error) => {
-        winston.log(error);
-    });
+            index: 'wiki',
+            type: 'document',
+            id: article.title,
+            body: article
+        })
+        .then((response) => {
+            winston.info("New (" + article.title + ") with alias " + article.aka);
+            return response;
+        })
+        .catch((error) => {
+            winston.log(error);
+            throw error;
+        });
 }
 
-function updateArticle(title, update) {
-    console.log(title + " " + update);
+/*function upsertArticle(article) {
     return client.update({
         index: 'wiki',
         type: 'document',
-        id: title,
-        script : "ctx._source.akas+=akas",
-        params: {
-            akas: update.akas
-        }
-    })
+        id: article.title,
+        doc: article,
+        doc_as_upsert: true
+    }).then(() => {
+        winston.log(title + " updated with new alias " + aka)
+    });
+}*/
+
+function updateArticleAlias(title, aka) {
+    return client.update({
+            index: 'wiki',
+            type: 'document',
+            id: title,
+            body: {
+                script: "ctx._source.akas += params.aka",
+                params: {
+                    aka: aka
+                }
+            }
+        })
+        .then(() => {
+            winston.log(title + " updated with new alias " + aka)
+        })
+        .catch((error) => {
+            winston.error(error);
+            throw error;
+        });
 }
 
 function getArticle(title) {
@@ -44,15 +70,17 @@ function getArticle(title) {
             }
         }
     }).then((result) => {
-        if (result.hits.hits.length > 0) {
-            return result.hits.hits[0]._source;
+        var found = result.hits.hits;
+        if (found.length > 0) {
+            winston.info("Found (" + found[0]._source.title + ") with alias " + title + " in ES");
+            return found[0]._source;
         }
         else {
             throw new Error("Could not find article: " + title);
         }
     }).catch((error) => {
         winston.error(error);
-        throw new Error("Could not find article: " + title);
+        throw error;
     });
 }
 
@@ -118,7 +146,7 @@ function getGraph(root, edges) {
     }
 }
 
-exports = module.exports = { getArticle, putArticle, updateArticle, getMoreLikeThis, getGraph };
+exports = module.exports = { getArticle, putArticle, updateArticleAlias, getMoreLikeThis, getGraph };
 
 /*client.ping({
     // ping usually has a 3000ms timeout

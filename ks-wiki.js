@@ -18,8 +18,6 @@ function getWikiHtml(subject) {
                 disablelimitreport: true
         },
         url = "http://en.wikipedia.org/w/api.php" + urlparse.format({ query: params });
-        console.log(url);
-    
     return request({
             uri: url,
             json: true
@@ -54,7 +52,6 @@ function getWikiText(page, onlySummary) {
         params.exintro ='';
     }
     var url = "http://en.wikipedia.org/w/api.php" + urlparse.format({ query: params });
-    winston.info(url);
     return request({
             uri: url,
             json: true
@@ -64,50 +61,43 @@ function getWikiText(page, onlySummary) {
         });
 };
 
+function getWikiFromSource(subject) {
+    var wikiPromises = [
+        getWikiHtml(subject),
+        getWikiText(subject)
+    ];
+    return Promise.all(wikiPromises).then((subjectResponse) => {
+        var article = {
+            title: subjectResponse[0].title,
+            html: subjectResponse[0].body,
+            links: subjectResponse[0].links,
+            text: subjectResponse[1],
+            akas: []
+        };
+        if (article.title != subject) {
+            article.akas.push(subject);
+        }
+        return article;
+    });
+}
+
 function getWiki(subject) {
     return es.getArticle(subject)
-        .then ((response) => {
-            winston.info("Found (" + response.title + ") with alias " + subject + " in ES");
-            return response;
-        })
         .catch(() => {
-            var wikiPromises = [
-                getWikiHtml(subject),
-                getWikiText(subject)
-            ];
-            return Promise.all(wikiPromises).then((subjectResponse) => {
-                var article = {
-                    title: subjectResponse[0].title,
-                    html: subjectResponse[0].body,
-                    links: subjectResponse[0].links,
-                    text: subjectResponse[1],
-                    akas: []
-                };
-                if (article.title != subject) {
-                    article.akas.push(subject);
-                }
-                return es.getArticle(article.title)
-                    .then((response) => {
-                        winston.info("Found (" + article.title + ") with alias new alias " + subject);
-                        if (response.akas && !response.akas.includes(subject)) {
-                            return es.updateArticle(response.title, { akas: subject })
-                                .then(() => { return article; });
-                        }
-                        else {
-                            return Promise.resolve(article);
-                        }
-                    })
-                    .catch((error) => {
-                        return es.putArticle(article)
-                            .then(() => {
-                                winston.info("New (" + article.title + ") with alias " + subject);
-                                return article;
-                            })
-                            .catch((err) => {
-                                winston.error(err);
-                            });
-                    });
-            });
+            return getWikiFromSource(subject)
+                .then((article) => {
+                    return es.getArticle(article.title)
+                        .then((response) => {
+                            // Article exists but title is different than what we searched for
+                            if (!response.akas.includes(subject)) {
+                                return es.updateArticleAlias(article.title, subject);
+                            }
+                        })
+                        .catch(() => {
+                            return es.putArticle(article);
+                        })
+                        .then(() => { return Promise.resolve(article); });
+                });
         });
 }
 
