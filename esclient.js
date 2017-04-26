@@ -42,11 +42,13 @@ function updateArticleAlias(title, aka) {
             type: 'document',
             id: title,
             body: {
-                script: "ctx._source.akas += params.aka",
-                params: {
-                    aka: aka
-                }
-            }
+                "script": {
+    		    "inline":"ctx._source.akas.add(params.aka)",
+    		    "params": {
+          		"aka": "Amir's Linear Algebra"
+     		    }
+ 		 }
+	    }
         })
         .then(() => {
             winston.log(title + " updated with new alias " + aka)

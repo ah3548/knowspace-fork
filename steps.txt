@@ -32,3 +32,26 @@ POST /wiki/document/_delete_by_query
         "match_all" : {}
     }
 }
+
+GET /wiki/document/Linear%algebra
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+GET /wiki/document/Linear%20algebra
+GET /wiki/document/Coordinate%20system
+
+DELETE /wiki/document/Linear%20algebra
+
+POST /wiki/document/Linear%20algebra/_update
+{
+  "script": {
+    "inline":"ctx._source.akas.add(params.aka)",
+    "params": {
+          "aka": "Amir's Linear Algebra"
+     }
+  }
+}
+
