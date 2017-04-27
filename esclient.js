@@ -64,12 +64,23 @@ function getArticle(title) {
         "index":"wiki",
         "type":"document",
         "body": {
-            "query": {
-                "query_string": {
-                    "query": title,
-                    "fields": ["title","akas"]
+            "query": { 
+      "bool":{ "should": [
+      {
+                "term": { 
+                    "title.keyword": "Coordinate"
+                }
+            },
+            {
+              "term": { 
+                    "akas.keyword": "Coordinate"
                 }
             }
+                ]
+      }
+  },
+            "_source": ["title","akas"]
+}
         }
     }).then((result) => {
         var found = result.hits.hits;

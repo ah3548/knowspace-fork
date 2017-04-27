@@ -55,3 +55,71 @@ POST /wiki/document/Linear%20algebra/_update
   }
 }
 
+{
+  "wiki": {
+    "aliases": {},
+    "mappings": {
+      "document": {
+        "properties": {
+          "akas": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          },
+          "html": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          },
+          "links": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          },
+          "text": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          },
+          "title": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          }
+        }
+      }
+    },
+    "settings": {
+      "index": {
+        "creation_date": "1493242848870",
+        "number_of_shards": "5",
+        "number_of_replicas": "1",
+        "uuid": "uSY9stF-TfiEyAIgwWDfyQ",
+        "version": {
+          "created": "5030199"
+        },
+        "provided_name": "wiki"
+      }
+    }
+  }
+}
