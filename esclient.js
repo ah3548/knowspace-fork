@@ -8,6 +8,8 @@ var elasticsearch = require('elasticsearch'),
     winston = require('winston');
 
 function putArticle(article) {
+    article.title = article.title.toLowerCase();
+    article.akas = article.akas.map( e => { return e.toLowerCase() } );
     return client.create({
             index: 'wiki',
             type: 'document',
@@ -15,7 +17,7 @@ function putArticle(article) {
             body: article
         })
         .then((response) => {
-            winston.info("New (" + article.title + ") with alias " + article.aka);
+            winston.info("New (" + article.title + ") with aliases " + article.akas);
             return response;
         })
         .catch((error) => {
@@ -37,21 +39,24 @@ function putArticle(article) {
 }*/
 
 function updateArticleAlias(title, aka) {
+    title = title.toLowerCase();
+    aka = aka.toLowerCase();
     return client.update({
             index: 'wiki',
             type: 'document',
             id: title,
             body: {
                 "script": {
-    		    "inline":"ctx._source.akas.add(params.aka)",
-    		    "params": {
-          		"aka": "Amir's Linear Algebra"
-     		    }
- 		 }
-	    }
+                    "inline":"ctx._source.akas.add(params.aka)",
+                    "params": {
+                        "aka": aka
+                    }
+ 		        }
+	        }
         })
-        .then(() => {
+        .then((result) => {
             winston.log(title + " updated with new alias " + aka)
+            return result;
         })
         .catch((error) => {
             winston.error(error);
@@ -60,27 +65,19 @@ function updateArticleAlias(title, aka) {
 }
 
 function getArticle(title) {
+    title = title.toLowerCase();
     return client.search({
         "index":"wiki",
         "type":"document",
         "body": {
-            "query": { 
-      "bool":{ "should": [
-      {
-                "term": { 
-                    "title.keyword": "Coordinate"
-                }
-            },
-            {
-              "term": { 
-                    "akas.keyword": "Coordinate"
+            "query": {
+                "bool":{
+                    "should": [
+                        { "term": { "title.keyword": title } },
+                        { "term": { "akas.keyword": title } }
+                    ]
                 }
             }
-                ]
-      }
-  },
-            "_source": ["title","akas"]
-}
         }
     }).then((result) => {
         var found = result.hits.hits;
@@ -92,8 +89,8 @@ function getArticle(title) {
             throw new Error("Could not find article: " + title);
         }
     }).catch((error) => {
-        winston.error(error);
-        throw error;
+        winston.error("Could not find article: " + title);
+        throw new Error("Could not find article: " + title);
     });
 }
 

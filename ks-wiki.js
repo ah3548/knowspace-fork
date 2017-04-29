@@ -58,6 +58,9 @@ function getWikiText(page, onlySummary) {
         }).then( (body) => {
             var article = body.query.pages[body.query.pageids[0]].extract;
             return article;
+        }).catch( (error) => {
+            winston.log(error);
+            throw error;
         });
 };
 
@@ -74,10 +77,13 @@ function getWikiFromSource(subject) {
             text: subjectResponse[1],
             akas: []
         };
-        if (article.title != subject) {
+        if (article.title.toLowerCase() !== subject.toLowerCase()) {
             article.akas.push(subject);
         }
         return article;
+    }).catch( (error) => {
+        winston.log(error);
+        throw error;
     });
 }
 
@@ -89,11 +95,13 @@ function getWiki(subject) {
                     return es.getArticle(article.title)
                         .then((response) => {
                             // Article exists but title is different than what we searched for
-                            if (!response.akas.includes(subject)) {
+                            if (response.title != subject.toLowerCase() && !response.akas.includes(subject)) {
+                                console.log("UPDATING: " + article.title);
                                 return es.updateArticleAlias(article.title, subject);
                             }
                         })
                         .catch(() => {
+                            console.log("PUTTING: " + article.title)
                             return es.putArticle(article);
                         })
                         .then(() => { return Promise.resolve(article); });

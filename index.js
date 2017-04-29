@@ -30,7 +30,7 @@ function getWikiArticles(subject, articles, breadth, depth) {
 
 var title = "Linear Algebra";
 var articles = {};
-getWikiArticles(title, articles, 50, 1).then((articles) => {
+getWikiArticles(title, articles, 150, 2).then(() => {
     //console.log(response);
     for (var art in articles) {
         console.log(articles[art].title);

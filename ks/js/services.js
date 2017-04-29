@@ -26,7 +26,7 @@ angular.module('ksApp')
         console.log('graph');
         return $resource(BASEURL + "/graph/:title",
                         {title:'@title'}, {
-                        query: {method: "GET"},
+                        query: {method: "GET", isArray:true},
                         update: {method: "POST"}
                 });
     }]);

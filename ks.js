@@ -138,7 +138,17 @@ app.get('/graph/:title', function(req, res) {
     var edges = {};
     es.getGraph(req.params.title, edges).then(() => {
         console.log(edges);
-        res.json(edges);
+        var adjacencyMatrix =
+            Object.keys(edges).map((key) => { return {
+                title: key,
+                edges: Object.keys(edges[key]).map((adjacentNode) => {
+                    return {
+                        title: adjacentNode,
+                        weight: edges[key][adjacentNode]
+                    }
+                })
+            };})
+        res.json(adjacencyMatrix);
     })
 });
 

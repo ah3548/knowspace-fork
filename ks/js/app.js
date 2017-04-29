@@ -266,9 +266,26 @@ angular.module('ksApp', ['ngResource', 'angular-bind-html-compile', 'ngCookies']
 
             function getGraph() {
                 return graph.query({
-                    title: $scope.subject.replace('_',' ')
+                    title: $scope.subject.replace('_',' ').toLowerCase()
                 }).$promise.then(function(graph) {
                     console.log(graph);
+                    graph.forEach( (n) => {
+                        var nExists = getNode(n);
+                        if (nExists.length == 0) {
+                            addNode(n);
+                        }
+                        n.edges.forEach((e) => {
+                            nExists = getNode(e);
+                            if (nExists.length == 0) {
+                                addNode(e);
+                            }
+                            var eExists = getEdge(n, e);
+                            if (eExists.length == 0) {
+                                addEdge(n, e);
+                            }
+                        })
+                    });
+                    setGraphLayout();
                 });
                 /*return graph.query({
                     username: $scope.username
