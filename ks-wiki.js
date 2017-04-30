@@ -18,6 +18,7 @@ function getWikiHtml(subject) {
                 disablelimitreport: true
         },
         url = "http://en.wikipedia.org/w/api.php" + urlparse.format({ query: params });
+        winston.log(url);
     return request({
             uri: url,
             json: true

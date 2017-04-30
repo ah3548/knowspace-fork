@@ -45,12 +45,35 @@ describe("index", function() {
         });
     });
 
-    describe.only("getArticle", () => {
+    describe("getArticle", () => {
         it(article.title, () => {
             return es.getArticle(article.title)
                 .then( (result) =>
                     console.log(result)
                 )
+                .catch( (err) => console.log(err) );
+        });
+    });
+
+    describe("getMoreLikeThis", () => {
+        it('linear algebra', () => {
+            return es.getMoreLikeThis('linear algebra', 5)
+                .then( (result) =>
+                    console.log(result)
+                )
+                .catch( (err) => console.log(err) );
+        });
+    });
+
+    describe.only("getGraph", () => {
+        it('linear algebra', () => {
+            var edges = {};
+            this.timeout(60000);
+            return es.getGraph('linear algebra', edges)
+                .then( () => {
+                    console.log(edges);
+                    return edges;
+                })
                 .catch( (err) => console.log(err) );
         });
     });

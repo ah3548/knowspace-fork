@@ -38,8 +38,8 @@ describe("index", function() {
     });
 
     describe.only("getWiki", function() {
-        it("Coordinate system", function() {
-            return wiki.getWiki('Coordinate system', false)
+        it("axiom", function() {
+            return wiki.getWiki('Axiom', false)
                 .then((result) => {
                     console.log(result);
                 })

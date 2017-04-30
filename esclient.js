@@ -95,13 +95,15 @@ function getArticle(title) {
 }
 
 function getMoreLikeThis(title, numLike) {
+    winston.info("Getting more like: " + title)
+    title = title.toLowerCase();
     return client.search({
         "index":"wiki",
         "type":"document",
         "body": {
             "query": {
                 "more_like_this" : {
-                    "fields" : ["title","text"],
+                    "fields" : ["text"],
                     "like" : [{
                         "_index" : "wiki",
                         "_type" : "document",
@@ -112,7 +114,8 @@ function getMoreLikeThis(title, numLike) {
                     "max_query_terms" : 10000
                 }
             },
-            "size": numLike
+            "size": numLike,
+            "_source": ["title"]
         }
     }).then(function (resp) {
         var hits = resp.hits.hits;
@@ -122,7 +125,8 @@ function getMoreLikeThis(title, numLike) {
             return obj;
         });
     }, function (err) {
-        console.trace(err.message);
+        winston.error(title + ": " + err);
+        throw err;
     });
 }
 
@@ -130,7 +134,10 @@ function getMoreLikeThis(title, numLike) {
 //getArticle("Cauchy–Schwarz inequality").then((response)=> console.log(response));
 //getArticle("Characteristic value").then((response)=> console.log(response));
 
-function getGraph(root, edges) {
+function getGraph(root, edges, depth) {
+    if (depth === undefined) {
+        depth = 2;
+    }
     if (!edges.hasOwnProperty(root)) {
         return getMoreLikeThis(root, 5)
             .then((response) => {
@@ -140,16 +147,24 @@ function getGraph(root, edges) {
                 }
                 response.forEach((e) => {
                     var nodeB = e.title;
-                    if (!edges.hasOwnProperty(nodeB) || !edges[nodeB].hasOwnProperty(nodeA)) {
+                    if (!edges.hasOwnProperty(nodeB) ||
+                        (edges.hasOwnProperty(nodeB) && !edges[nodeB].hasOwnProperty(nodeA))) {
                         edges[nodeA][nodeB] = e.score;
-                        nodeBs.push(nodeB);
+                        if (depth > 0) {
+                            nodeBs.push(nodeB);
+                        }
                     }
                 })
                 return nodeBs;
-            }).then((nodes) => {
+            })
+            .catch((err) => {
+                winston.info("No matches found for " + root);
+                return [];
+            })
+            .then((nodes) => {
                 var promises = []
                 nodes.forEach((nodeA) => {
-                    promises.push( getGraph(nodeA, edges) );
+                    promises.push( getGraph(nodeA, edges, depth-1) );
                 });
                 return Promise.all(promises);
             });
