@@ -23,18 +23,9 @@
     "html-to-text": "^2.1.0",
     "jquery": "^2.2.3",
     "mocha": "^3.3.0",
-    "node-mysql": "^0.4.2",
-    "node-wikipedia": "0.0.2",
-    "ractive": "^0.7.3",
     "request-promise-native": "^1.0.3",
-    "sequelize": "^3.21.0",
-    "stackexchange": "^0.3.0",
     "winston": "^2.3.1"
-  },
-  "devDependencies": {
-    "sequelize-auto": "^0.4.2"
-  },
-  "scripts": {
+  },  "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

@@ -37,11 +37,9 @@ Existing education platforms treat the pursuit of knowledge as a regimented set 
 ### Technology Stack
 | TECHNOLOGY | IMPLEMENTATION |
 | ---------- | --------------- |
-| MYSQL      | <ul><li>mysql-server</li><li>phpmyadmin</li></ul> |
-| WIKIPEDIA  | <ul><li>node-wikipedia</li></ul> |
-| STACK OVERFLOW | <ul><li>stackexchange</li><li>phpmyadmin</li></ul> |
-| ORM | <ul><li>sequelize-auto</li><li>node-sequelize</li></ul> |
-| UI |  <ul><li>angularjs</li><li>bootstrap</li></ul> |
+| WIKIPEDIA  | NodeJs Againts Wikipedia Api |
+| ELASTIC SEARCH | NodeJS Client against Local Elastic Search 5.3.0 API</li></ul> |
+| UI |  <ul><li>AngularJS 1.x </li><li>bootstrap</li></ul> |
 
 ### Link to Demo
 

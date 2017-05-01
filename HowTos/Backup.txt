@@ -1,0 +1,36 @@
+PUT /_snapshot/my_backup
+{
+  "type": "fs",
+  "settings": {
+    "compress": true,
+    "location": "C:\\Elastic\\backups"
+  }
+}
+
+PUT /_snapshot/my_backup/snapshot_1
+{
+  "indices": "wiki",
+  "ignore_unavailable": true,
+  "include_global_state": false
+}
+
+GET /_snapshot/my_backup/snapshot_1
+
+POST /wiki/document/_delete_by_query
+{
+    "query" : {
+        "match_all" : {}
+    }
+}
+
+GET /wiki/document/_search
+{
+  "query": {
+    "match_all": {}
+  },
+  "_source": ["title"]
+}
+
+POST /wiki/_close
+POST /_snapshot/my_backup/snapshot_1/_restore
+POST /wiki/_open

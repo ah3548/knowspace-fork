@@ -3,57 +3,80 @@
 var elasticsearch = require('elasticsearch'),
     client = new elasticsearch.Client({
       host: 'localhost:9200',
+      maxSockets: 100,
       //log: 'trace'
     }),
-    winston = require('winston');
+    winston = require('winston'),
+    default_obj = {index: 'wiki', type: 'document'};
+
+function getArticle(title, fields) {
+    if (fields == undefined) {
+        fields = ['title', 'akas', 'links'];
+    }
+    title = title.toLowerCase();
+    var request = Object.assign({}, default_obj, {
+        "body": {
+            "query": {
+                "bool":{
+                    "should": [
+                        { "term": { "title.keyword": title } },
+                        { "term": { "akas.keyword": title } }
+                    ]
+                }
+            },
+            "_source": fields
+        }
+    });
+    return client.search(request).then((result) => {
+        var found = result.hits.hits;
+        if (found.length > 0) {
+            winston.info("Found (" + found[0]._source.title + ") with alias " + title + " in ES");
+            var dataReturned = found[0]._source;
+            if (fields.length == 1) {
+                dataReturned = dataReturned[fields[0]];
+            }
+            return dataReturned;
+        }
+        else {
+            winston.info("Could not find article: " + title);
+            return {};
+        }
+    }).catch((error) => {
+        winston.error(title + " search error: " + error);
+        throw error;
+    });
+}
 
 function putArticle(article) {
     article.title = article.title.toLowerCase();
     article.akas = article.akas.map( e => { return e.toLowerCase() } );
-    return client.create({
-            index: 'wiki',
-            type: 'document',
-            id: article.title,
-            body: article
-        })
+    var request = Object.assign({}, default_obj, {
+        id: article.title,
+        body: article
+    });
+    return client.create(request)
         .then((response) => {
             winston.info("New (" + article.title + ") with aliases " + article.akas);
             return response;
         })
         .catch((error) => {
             winston.log(error);
-            throw error;
         });
 }
 
-/*function upsertArticle(article) {
-    return client.update({
-        index: 'wiki',
-        type: 'document',
-        id: article.title,
-        doc: article,
-        doc_as_upsert: true
-    }).then(() => {
-        winston.log(title + " updated with new alias " + aka)
-    });
-}*/
-
 function updateArticleAlias(title, aka) {
-    title = title.toLowerCase();
-    aka = aka.toLowerCase();
-    return client.update({
-            index: 'wiki',
-            type: 'document',
-            id: title,
-            body: {
-                "script": {
-                    "inline":"ctx._source.akas.add(params.aka)",
-                    "params": {
-                        "aka": aka
-                    }
- 		        }
-	        }
-        })
+    var request = Object.assign({}, default_obj, {
+        id: title.toLowerCase(),
+        body: {
+            "script": {
+                "inline":"ctx._source.akas.add(params.aka)",
+                "params": {
+                    "aka": aka.toLowerCase()
+                }
+            }
+        }
+    });
+    return client.update(request)
         .then((result) => {
             winston.log(title + " updated with new alias " + aka)
             return result;
@@ -64,42 +87,10 @@ function updateArticleAlias(title, aka) {
         });
 }
 
-function getArticle(title) {
-    title = title.toLowerCase();
-    return client.search({
-        "index":"wiki",
-        "type":"document",
-        "body": {
-            "query": {
-                "bool":{
-                    "should": [
-                        { "term": { "title.keyword": title } },
-                        { "term": { "akas.keyword": title } }
-                    ]
-                }
-            }
-        }
-    }).then((result) => {
-        var found = result.hits.hits;
-        if (found.length > 0) {
-            winston.info("Found (" + found[0]._source.title + ") with alias " + title + " in ES");
-            return found[0]._source;
-        }
-        else {
-            throw new Error("Could not find article: " + title);
-        }
-    }).catch((error) => {
-        winston.error("Could not find article: " + title);
-        throw new Error("Could not find article: " + title);
-    });
-}
-
 function getMoreLikeThis(title, numLike) {
     winston.info("Getting more like: " + title)
     title = title.toLowerCase();
-    return client.search({
-        "index":"wiki",
-        "type":"document",
+    var request = Object.assign({}, default_obj, {
         "body": {
             "query": {
                 "more_like_this" : {
@@ -117,7 +108,8 @@ function getMoreLikeThis(title, numLike) {
             "size": numLike,
             "_source": ["title"]
         }
-    }).then(function (resp) {
+    });
+    return client.search(request).then(function (resp) {
         var hits = resp.hits.hits;
         return hits.map((e) => {
             var obj = e._source;
@@ -130,16 +122,12 @@ function getMoreLikeThis(title, numLike) {
     });
 }
 
-// Write Test for This
-//getArticle("Cauchy–Schwarz inequality").then((response)=> console.log(response));
-//getArticle("Characteristic value").then((response)=> console.log(response));
-
 function getGraph(root, edges, depth) {
     if (depth === undefined) {
         depth = 2;
     }
     if (!edges.hasOwnProperty(root)) {
-        return getMoreLikeThis(root, 5)
+        return getMoreLikeThis(root, 7)
             .then((response) => {
                 var nodeA = root, nodeBs = [];
                 if (!edges.hasOwnProperty(nodeA)) {
@@ -172,54 +160,3 @@ function getGraph(root, edges, depth) {
 }
 
 exports = module.exports = { getArticle, putArticle, updateArticleAlias, getMoreLikeThis, getGraph };
-
-/*client.ping({
-    // ping usually has a 3000ms timeout
-    requestTimeout: 1000
-}, function (error) {
-    if (error) {
-        console.trace('elasticsearch cluster is down!');
-    } else {
-        console.log('All is well');
-    }
-});
-
-wikipedia.getWiki(title)
-    .then( (result) => {
-        client.index({
-            index: 'wiki',
-            type: 'document',
-            id: '3',
-            body: {
-                "title": title,
-                "text": result
-            }
-        }, function (err, resp, status) {
-            console.log(resp);
-        });
-    });
-
-client.search({
-    "index":"wiki",
-    "type":"document",
-    "body": {
-        "query": {
-            "more_like_this" : {
-                "fields" : ["title","text"],
-                "like" : [{
-                    "_index" : "wiki",
-                    "_type" : "document",
-                    "_id" : "1"
-                }],
-                "min_term_freq" : 1,
-                "min_doc_freq": 1,
-                "max_query_terms" : 12
-            }
-        }
-    }
-}).then(function (resp) {
-    var hits = resp.hits.hits;
-    console.log(hits);
-}, function (err) {
-    console.trace(err.message);
-});*/

@@ -50,7 +50,7 @@ angular.module('ksApp')
               })
     }])
     .value('subjects', [
-                {name: "Linear_Algebra"}
+                {name: "Linear Algebra"}
             ])
     .value('qs', [])
     .value('emojis', {

@@ -4,28 +4,11 @@ angular.module('ksApp', ['ngResource', 'angular-bind-html-compile', 'ngCookies']
     .config(['$sceProvider', function ($sceProvider) {
         $sceProvider.enabled(false);
     }])
-    .controller('MainCtrl', ['$scope', '$resource', '$document', '$rootScope', '$cookies', 'categories', 'subjects', 'zoomToolDefaults', 'cyStyle', 'qs', 'question', 'wiki', 'graph', 'AuthenticationService', 'emojis',
-                             function ($scope, $resource, $document, $rootScope, $cookies, categories, subjects, zoomToolDefaults, cyStyle, qs, question, wiki, graph, AuthenticationService, emojis) {
-            $scope.username = getSessionInfo('username');
+    .controller('MainCtrl', ['$scope', '$resource', '$document', '$rootScope', '$cookies', 'categories', 'subjects', 'zoomToolDefaults', 'cyStyle', 'qs', 'wiki', 'graph', 'emojis',
+                             function ($scope, $resource, $document, $rootScope, $cookies, categories, subjects, zoomToolDefaults, cyStyle, qs, wiki, graph, emojis) {
             $scope.subject = getSessionInfo('subject');
             $scope.subjects = getSessionInfo('subjects');
             $scope.categories = categories;
-            $scope.questions = qs;
-            
-            //$scope.password = '';
-
-            AuthenticationService.ClearCredentials();
-            $scope.login = function () {
-                $scope.dataLoading = true;
-                AuthenticationService.Login($scope.username, null, function (response) {
-                    if (response.success) {
-                        AuthenticationService.SetCredentials($scope.username, null);
-                    } else {
-                        $scope.error = response.message;
-                    }
-                    $scope.dataLoading = false;
-                });
-            }
 
             /* CY INIT */
             var cy = null;
@@ -175,9 +158,6 @@ angular.module('ksApp', ['ngResource', 'angular-bind-html-compile', 'ngCookies']
                     case "subjects":
                         $cookies.putObject(name, $scope[name]);
                         break;
-                    case "graph":
-                        saveGraph(cy.json());
-                        break;
                 }
             }
 
@@ -236,32 +216,12 @@ angular.module('ksApp', ['ngResource', 'angular-bind-html-compile', 'ngCookies']
 
             // ################### SERVICES ############################## 
             function getWiki(subject) {
-                /*var article = wiki.get();
+                var article = wiki.get();
                 article.query({
                     subject: $scope.subject
                 }).$promise.then(function (article) {
                     $scope.article = article;
-                });*/
-            }
-
-            function getWikiLinks(subject) {
-                /*var links = wiki.getLinks();
-                links.query({
-                    subject: $scope.subject
-                }).$promise.then(function (ls) {
-                    ls.unshift({
-                        title: uToS($scope.subject)
-                    });
-                    updateGraph(ls);
-                });*/
-            }
-
-            function getSO(subject) {
-                /*question.query({
-                    subject: $scope.subject
-                }).$promise.then(function (result) {
-                    $scope.questions = result;
-                });*/
+                });
             }
 
             function getGraph() {
@@ -287,27 +247,7 @@ angular.module('ksApp', ['ngResource', 'angular-bind-html-compile', 'ngCookies']
                     });
                     setGraphLayout();
                 });
-                /*return graph.query({
-                    username: $scope.username
-                }).$promise.then(function (graph) {
-                    if (graph != null) {
-                        graph.constructor = Object; // I don't understand why this needs to be here
-                                                console.log(graph);
-
-                        cy.json(graph);
-                        return graph;
-                    }
-                });*/
             }
-
-            function saveGraph(graphMetaData) {
-                console.log("saving graph");
-                /*graph.update({}, {
-                    username: $scope.username,
-                    graph: graphMetaData
-                });*/
-            }
-
 }])
     .directive('ksPage', function () {
         return {

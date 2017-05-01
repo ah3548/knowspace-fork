@@ -45,12 +45,28 @@ describe("index", function() {
         });
     });
 
-    describe("getArticle", () => {
-        it(article.title, () => {
-            return es.getArticle(article.title)
-                .then( (result) =>
-                    console.log(result)
-                )
+    describe.only("getArticle", () => {
+        var articles = [], articleTitles = [
+            "linear algebra",
+            "Cauchy–Schwarz inequality",
+            "Characteristic value"
+        ];
+        it(articleTitles.toString(), () => {
+            articles = [];
+            articleTitles.forEach((title) => {
+                articles.push( es.getArticle(title) );
+            })
+            return Promise.all( articles )
+                .then( result => result.forEach( e => console.log(e.title)) )
+                .catch( (err) => console.log(err) );
+        });
+        it(articleTitles.toString() + " html", () => {
+            articles = [];
+            articleTitles.forEach((title) => {
+                articles.push( es.getArticle(title, ['html']) );
+            })
+            return Promise.all( articles )
+                .then( result => result.forEach( e => console.log(e.html.substr(0,60))) )
                 .catch( (err) => console.log(err) );
         });
     });
@@ -65,7 +81,7 @@ describe("index", function() {
         });
     });
 
-    describe.only("getGraph", () => {
+    describe("getGraph", () => {
         it('linear algebra', () => {
             var edges = {};
             this.timeout(60000);

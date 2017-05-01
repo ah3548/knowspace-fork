@@ -1,14 +1,16 @@
-var wikipedia = require("node-wikipedia"),
-    orm = require("./ks-orm"),
-    winston = require('winston'),
-    es = require('./esclient');
+var winston = require('winston'),
+    es = require('./esclient'),
+    request = require('request-promise-native'),
+    http = require('http'),
+    httpAgent = new http.Agent();
+
+httpAgent.maxSockets = 15;
 
 function getWikiHtml(subject) {
-    var request = require('request-promise-native'),
-        urlparse = require('url'),
+    var urlparse = require('url'),
         params = {
                 action: "parse", 
-                page: subject.replace(/[-]/g, '_'),
+                page: subject,
                 prop:  "text|links",
                 format: 'json',
                 redirects: true,
@@ -18,30 +20,46 @@ function getWikiHtml(subject) {
                 disablelimitreport: true
         },
         url = "http://en.wikipedia.org/w/api.php" + urlparse.format({ query: params });
-        winston.log(url);
+        winston.info(url);
     return request({
             uri: url,
-            json: true
+            json: true,
+            pool: httpAgent
         })
-        .catch(error => { throw new Error("Subject Does Not Exist"); })
+        .catch(error => {
+            winston.info(error);
+            winston.error("Cannot retrieve html for " + subject);
+        })
         .then( (response) => {
+            if (!response) {
+                response = {
+                    parse: {
+                        title: subject,
+                        text: { "*":"" },
+                        links: []
+                    }
+                }
+            }
             response = response.parse;
             return {
                 title: response.title,
                 body: response.text['*'].toString(),
                 links: response.links
                     .map( (e) => { return e['*']; })
-                    .filter( (e) => { return !/.*:.*/.test(e); })
+                    .filter( (e) => {
+                        return !/.*:.*/.test(e) &&
+                               !/[0-9]+ \(number\)/.test(e);
+                    })
             };
-        });
+        })
+        .catch(err => winston.error(err));
 }
 
 function getWikiText(page, onlySummary) {
-    var request = require('request-promise-native'),
-        urlparse = require('url'),
+    var urlparse = require('url'),
         params = {
             action: "query",
-            titles: page.replace(/[-]/g, '_'),
+            titles: page,
             format: 'json',
             prop: 'extracts',
             explaintext: '',
@@ -53,9 +71,11 @@ function getWikiText(page, onlySummary) {
         params.exintro ='';
     }
     var url = "http://en.wikipedia.org/w/api.php" + urlparse.format({ query: params });
+    winston.info(url);
     return request({
             uri: url,
-            json: true
+            json: true,
+            pool: httpAgent
         }).then( (body) => {
             var article = body.query.pages[body.query.pageids[0]].extract;
             return article;
@@ -88,82 +108,33 @@ function getWikiFromSource(subject) {
     });
 }
 
-function getWiki(subject) {
-    return es.getArticle(subject)
-        .catch(() => {
-            return getWikiFromSource(subject)
-                .then((article) => {
-                    return es.getArticle(article.title)
-                        .then((response) => {
-                            // Article exists but title is different than what we searched for
-                            if (response.title != subject.toLowerCase() && !response.akas.includes(subject)) {
-                                console.log("UPDATING: " + article.title);
-                                return es.updateArticleAlias(article.title, subject);
-                            }
-                        })
-                        .catch(() => {
-                            console.log("PUTTING: " + article.title)
-                            return es.putArticle(article);
-                        })
-                        .then(() => { return Promise.resolve(article); });
-                });
+function getWiki(subject, fields) {
+    return es.getArticle(subject, fields)
+        .then((article) => {
+            if (typeof article === "string" ||
+                article.hasOwnProperty("title")
+            ) {
+                return Promise.resolve(article);
+            }
+            else {
+                return getWikiFromSource(subject)
+                    .then((article) => {
+                        return es.getArticle(article.title)
+                            .then((response) => {
+                                // Article exists but title is different than what we searched for
+                                if (!response.hasOwnProperty('title')) {
+                                    console.log("PUTTING: " + article.title)
+                                    return es.putArticle(article);
+                                }
+                                else if (response.title != subject.toLowerCase() && !response.akas.includes(subject)) {
+                                    console.log("UPDATING: " + article.title);
+                                    return es.updateArticleAlias(article.title, subject);
+                                }
+                            })
+                            .then(() => { return Promise.resolve(article); });
+                    });
+            }
         });
 }
 
-function getStoredWiki(subject) {
-    return orm.getWikiEntry(subject);
-}
-
-function notAvailabeGetFromWeb(error) {
-    console.log(error);
-    return getWiki(error.subject).then(
-        function(content) {
-            console.log("Inserting wikipedia entry into database");
-            return setWiki(error.subject, content);
-        }
-    );
-}
-
-function setWiki(subject, content) {
-    return orm.createWikiEntry(
-        {
-            subject:subject,
-            content:content
-        }
-    ).then(
-        function(wiki) {
-            return wiki.content;
-        }
-    );
-}
-
-function getContent(content) {
-    console.log("Returning content")
-    return content;
-}
-
-
-function getWikiEntry(subject) {
-    return getStoredWiki(subject)
-        .catch(notAvailabeGetFromWeb)
-        .then(getContent)
-        .catch(error => { return error.message });
-}
-
-exports = module.exports = { getWiki, getWikiEntry };
-
-//getWiki("Cauchy–Schwarz inequality").then((response)=> console.log(response));
-//getWiki('Abelian group').then(response => console.log(response) );
-//getWiki("Characteristic value").then((response)=> console.log(response));
-
-/*
-wikipedia.revisions.all("Miles_Davis", { comment: true }, function(response) {
-	// info on each revision made to Miles Davis' page
-});
-
-wikipedia.categories.tree(
-	"Philadelphia_Phillies",
-	function(tree) {
-		//nested data on the category page for all Phillies players
-	}
-);*/
+exports = module.exports = { getWiki, getWikiHtml, getWikiText };

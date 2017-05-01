@@ -1,8 +1,6 @@
 var cheerio = require('cheerio'),
-    orm = require('./ks-orm'),
     htt = require('html-to-text');
     //natural = require('natural');
-
 
 function removeComments(body) {
     var $ = cheerio.load(body);
@@ -180,37 +178,6 @@ function isBadId() {
         }
     }
 }
-
-/* Come back to at later point, not relevant right now */
-/*
-function getImportance(body, word) {
-    var TfIdf = natural.TfIdf,
-    tfidf = new TfIdf();
-
-tfidf.addDocument(body);
-tfidf.tfidfs('Bhubaneswar, India', function(i, measure) {
-    console.log('document #' + i + ' is ' + measure);
-});
-tfidf.listTerms(0).forEach(function(item) {
-    console.log(item.term + ': ' + item.tfidf);
-});
-}*/
-
-/*orm.getWikiEntry('Bud_Mishra')
-    .then(removeComments)
-    .then(removeMetaData)
-    .then(extractText)
-    .then(content => console.log(content));*/
-
-
-/*orm.getWikiEntry('Linear_Algebra')
-    .then(removeComments)
-    .then(removeMetaData)
-    .then(removeEditLinks)
-    .then(removeReferences)
-    .then(content => {
-        console.log(content);
-    });*/
 
 module.exports = {
     extractText,
