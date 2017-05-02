@@ -178,7 +178,6 @@ angular.module('ksApp', ['ngResource', 'angular-bind-html-compile', 'ngCookies']
                 console.log("loading " + $scope.subject);
                 updateSessionInfo('subject');
                 updateSessionInfo('subjects');
-                getSO();
                 getWiki();
                 console.log(getNode({
                     title: $scope.subject

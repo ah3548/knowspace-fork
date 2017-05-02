@@ -70,50 +70,8 @@
             <h1 class="text-center">{{subject}}</h1>
             <div id="wiki-container" bind-html-compile="article.intro"></div>
             <div class="row">
-                <div class="col-lg-6 col-sm-6">
-                    <hr class="section-heading-spacer">
-                    <div class="clearfix"></div>
-                    <div id="socontainer">
-                        <ul class="ChatLog">
-                            <div ng-repeat="q in questions" ng-model="questions">    
-                              <li class="ChatLog__entry ChatLog__entry_mine">
-                                <img class="ChatLog__avatar" src="//placekitten.com/g/50/50" />
-                                <p class="ChatLog__message" ng-bind-html="q.body"></p>
-                              </li>
-                              <div id="Q{{q.question_id}}" class="carousel slide" data-ride="carousel" data-interval="false"
-                                style="margin-left:20px; margin-right:20px">
-                                  <ol class="carousel-indicators">
-                                    <li data-target="#Q{{q.question_id}}" data-slide-to="0" class="active"></li>
-                                    <li data-target="#Q{{q.question_id}}" data-slide-to="{{$index + 1}}"></li>
-                                  </ol>
-
-                                  <div class="carousel-inner" role="listbox">
-                                      <div class="item active">
-                                            <h3 class="text-center">Answers</h3>
-                                    </div>
-                                    <div class="item" ng-repeat="a in q.so_answers">
-                                      <li class="ChatLog__entry">
-                                        <img class="ChatLog__avatar" src="//placekitten.com/g/50/50" />
-                                        <p class="ChatLog__message" ng-bind-html="a.body"></p>
-                                      </li>
-                                    </div>
-                                  </div>
-
-                                  <a class="left carousel-control" data-target="#Q{{q.question_id}}" role="button" data-slide="prev">
-                                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                                    <span class="sr-only">Previous</span>
-                                  </a>
-                                  <a class="right carousel-control" data-target="#Q{{q.question_id}}" role="button" data-slide="next">
-                                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                                    <span class="sr-only">Next</span>
-                                  </a>
-                            </div>  
-                            </div>
-                        </ul>
-                    </div>
-                </div>
-                <!--<div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">-->
-                <div class="col-lg-6 col-sm-6">
+               <!--<div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">-->
+                <div class="col-lg-12 col-sm-12">
                     <hr class="section-heading-spacer">
                     <div class="clearfix"></div>
                     <div id="wiki-container" bind-html-compile="article.body"></div>
