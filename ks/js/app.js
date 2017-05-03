@@ -206,7 +206,7 @@ angular.module('ksApp', ['ngResource', 'angular-bind-html-compile', 'ngCookies']
             }
 
             $scope.appIntercept = function (linkPath) {
-                var rPath = linkPath.split('/');
+                var rPath = linkPath.split('/').replace('_',' ');
                 addSub(rPath[2]);
             }
 
