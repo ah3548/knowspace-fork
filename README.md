@@ -40,3 +40,21 @@ Existing education platforms treat the pursuit of knowledge as a regimented set 
 | WIKIPEDIA  | NodeJs Http Client against Wikipedia Api |
 | ELASTIC SEARCH | NodeJS Client against Local Elastic Search 5.3.0 API</li></ul> |
 | UI |  <ul><li>AngularJS 1.x </li><li>Bootstrap</li><li>Cytoscape</li></ul> |
+
+
+Steps to Run:
+1. [Download Elastic Search](https://www.elastic.co/downloads/elasticsearch)
+2. Unzip Elastic Search package
+3. `cd elasticsearch-5.x.x/bin` (folder path is based on your package)
+4. Run elasticsearch.bat (Windows) or elasticsearch (Linux)
+5. (OPTIONAL) [Download Kibana](https://www.elastic.co/downloads/kibana)
+6. (OPTIONAL) Unzip Kibana package
+7. (OPTIONAL) `cd kibana-5.x.x-<OS>/bin`
+8. (OPTIONAL) Run kibana
+9. (OPTIONAL) Check if kibana is running - http://linserv2.cims.nyu.edu:19909
+10. Clone knowspace-fork from this repo
+11. `cd knowspace-fork`
+11. `module load node-6.9.1` 
+12. `npm install`
+13. `node ks`
+14. Navigate to application - http://linserv2.cims.nyu.edu:19910/ks/
