@@ -187,9 +187,6 @@ angular.module('ksApp', ['ngResource', 'angular-bind-html-compile', 'ngCookies']
                     title: $scope.subject
                 }).hasClass('twa-confused');
                 console.log(visited);
-                if (!visited) {
-                    getWikiLinks();
-                }
             }
 
             function addSub(subject) {
