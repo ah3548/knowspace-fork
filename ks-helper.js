@@ -1,19 +1,5 @@
 var cheerio = require('cheerio'),
     htt = require('html-to-text');
-    //natural = require('natural');
-
-function removeComments(body) {
-    var $ = cheerio.load(body);
-
-    $.root()
-        .contents()
-        .filter(function() {
-            return this.type === 'comment'; 
-        })
-        .remove();
-
-    return $.root().html();
-}
 
 function removeMetaData(body) {
     var $ = cheerio.load(body);
@@ -72,35 +58,6 @@ function isMetaDataClass(c) {
        
     return metaData;
 }
-
-function getAllLinks(body) {
-    $ = cheerio.load(body);
-    links = $('a'); //jquery get all hyperlinks
-    var result = [];
-    $(links).each(function(i, link){
-        var t = $(link).text(),
-            l = $(link).attr('href');
-        if (l.indexOf('/wiki/') != -1 &&
-            t !== 'ISBN' &&
-            t != '') { 
-            result.push(
-                {title:t, link:l}
-            );
-        }
-    });
-    return result;
-}
-
-function extractText(body) {
-    var text = htt.fromString(body, {
-        wordwrap: 130,
-        ignoreHref: true,
-        ignoreImage: true,
-        preserveNewlines: true
-    });
-    return text;
-}
-
 
 function removeEditLinks(body) {
     $ = cheerio.load(body);    
@@ -179,12 +136,10 @@ function isBadId() {
     }
 }
 
-module.exports = {
-    extractText,
+exports = module.exports = {
     removeMetaData,
     removeEditLinks,
     linkToCallback,
-    getAllLinks,
     splitIntro,
     removeReferences
 }

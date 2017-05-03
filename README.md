@@ -37,10 +37,6 @@ Existing education platforms treat the pursuit of knowledge as a regimented set 
 ### Technology Stack
 | TECHNOLOGY | IMPLEMENTATION |
 | ---------- | --------------- |
-| WIKIPEDIA  | NodeJs Againts Wikipedia Api |
+| WIKIPEDIA  | NodeJs Http Client against Wikipedia Api |
 | ELASTIC SEARCH | NodeJS Client against Local Elastic Search 5.3.0 API</li></ul> |
-| UI |  <ul><li>AngularJS 1.x </li><li>bootstrap</li></ul> |
-
-### Link to Demo
-
-[![Alt text for your video](http://img.youtube.com/vi/9NDBHs4vHJU/0.jpg)](http://www.youtube.com/watch?v=9NDBHs4vHJU)
+| UI |  <ul><li>AngularJS 1.x </li><li>Bootstrap</li><li>Cytoscape</li></ul> |

@@ -1,7 +1,7 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
     wiki = require('./ks-wiki'),
-    graph = require('./ks-graph'),
+    helper = require('./ks-helper'),
     es = require('./esclient'),
     index = require('./index'),
     app = express();
@@ -33,11 +33,11 @@ app.use(bodyParser.json({
 
 app.get('/wiki/:id', function (req, res) {
     wiki.getWiki(req.params.id, ["html"])
-        .then(graph.removeMetaData)
-        .then(graph.removeEditLinks)
-        .then(graph.removeReferences)
-        .then(graph.linkToCallback)
-        .then(graph.splitIntro)
+        .then(helper.removeMetaData)
+        .then(helper.removeEditLinks)
+        .then(helper.removeReferences)
+        .then(helper.linkToCallback)
+        .then(helper.splitIntro)
         .then(content => {
             res.send(content);
         })
