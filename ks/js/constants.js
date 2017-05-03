@@ -4,7 +4,7 @@ angular.module('ksApp')
                 {title:"Map"},
                 {title:"Guides"}
               ])
-    .constant('BASEURL', "http://linserv2:19910")
+    .constant('BASEURL', "http://linserv2.cims.nyu.edu:19910")
     .constant('zoomToolDefaults', {
                   zoomFactor: 0.05, // zoom factor per zoom tick
                   zoomDelay: 45, // how many ms between zoom ticks

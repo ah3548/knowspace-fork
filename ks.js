@@ -66,6 +66,7 @@ app.get('/graph/:title', function(req, res) {
     })
 });
 
-app.listen(19910, function () {
-    console.log('Listening on port 19910!');
+var PORT = 19910;
+app.listen(PORT, function () {
+    console.log('Listening on port' + PORT + '!');
 });

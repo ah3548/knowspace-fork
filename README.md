@@ -53,6 +53,7 @@ Steps to Run:
 8. (OPTIONAL) Run kibana
 9. (OPTIONAL) Check if kibana is running - http://linserv2.cims.nyu.edu:19909
 10. Clone knowspace-fork from this repo
+11. Configure BASE_URL in knowspace-fork\ks\js\constants.js and PORT in knowspace-fork\ks.js
 11. `cd knowspace-fork`
 11. `module load node-6.9.1` 
 12. `npm install`
