@@ -23,9 +23,11 @@
     "html-to-text": "^2.1.0",
     "jquery": "^2.2.3",
     "mocha": "^3.3.0",
+    "redis": "^2.7.1",
     "request-promise-native": "^1.0.3",
     "winston": "^2.3.1"
-  },  "scripts": {
+  },
+  "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
