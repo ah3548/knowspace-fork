@@ -57,17 +57,3 @@ angular.module('ksApp')
             confused: 'http://www.emoji-cheat-sheet.com/graphics/emojis/confused.png',
             satisfied: 'http://www.emoji-cheat-sheet.com/graphics/emojis/satisfied.png'        
           })
-            
-
-
-/*
-var categories = 
-
-var output="#container", template="#raccon";
-
-var ractive = new Ractive({
-  el: output,
-  template: template,
-  data: { categories: categories, subjects: subjects }
-});*/
-

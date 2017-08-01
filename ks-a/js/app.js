@@ -188,7 +188,7 @@ angular.module('ksApp', ['ngResource', 'angular-bind-html-compile', 'ngCookies']
                 }).hasClass('twa-confused');
                 console.log(visited);
                 if (!visited) {
-                    getWikiLinks();
+                    //uygetWikiLinks();
                 }
             }
 

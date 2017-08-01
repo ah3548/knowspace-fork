@@ -1,30 +1,5 @@
   <div id="container">
-    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
-        <div class="container topnav">
-            <div id="navbar-header" class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <ol class="navbar-brand breadcrumb" style="margin-top:10px; margin-bottom:0px;">
-                    <li ng-repeat="s in subjects">
-                        <a href="" ng-click="updateBreadCrumbs(s.name)">{{s.name}}</a>
-                        <i style="cursor:pointer" ng-class="{'twa twa-thumbsup': liked, 'twa twa-confused': !liked}" ng-click="liked=!liked"></i>
-                    </li>
-                </ol>
-            </div> 
-            
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li ng-repeat="c in categories">
-                        <a href="#{{c.title}}">{{c.title}}</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <ks-nav-bar></ks-nav-bar>
 
     <!-- Header -->
     <a name="Adventure"></a>
