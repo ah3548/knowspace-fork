@@ -1,20 +1,110 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{title}}!
-  </h1>
-  <img width="300" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOS4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjAgMCAyNTAgMjUwIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAyNTAgMjUwOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPg0KCS5zdDB7ZmlsbDojREQwMDMxO30NCgkuc3Qxe2ZpbGw6I0MzMDAyRjt9DQoJLnN0MntmaWxsOiNGRkZGRkY7fQ0KPC9zdHlsZT4NCjxnPg0KCTxwb2x5Z29uIGNsYXNzPSJzdDAiIHBvaW50cz0iMTI1LDMwIDEyNSwzMCAxMjUsMzAgMzEuOSw2My4yIDQ2LjEsMTg2LjMgMTI1LDIzMCAxMjUsMjMwIDEyNSwyMzAgMjAzLjksMTg2LjMgMjE4LjEsNjMuMiAJIi8+DQoJPHBvbHlnb24gY2xhc3M9InN0MSIgcG9pbnRzPSIxMjUsMzAgMTI1LDUyLjIgMTI1LDUyLjEgMTI1LDE1My40IDEyNSwxNTMuNCAxMjUsMjMwIDEyNSwyMzAgMjAzLjksMTg2LjMgMjE4LjEsNjMuMiAxMjUsMzAgCSIvPg0KCTxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0xMjUsNTIuMUw2Ni44LDE4Mi42aDBoMjEuN2gwbDExLjctMjkuMmg0OS40bDExLjcsMjkuMmgwaDIxLjdoMEwxMjUsNTIuMUwxMjUsNTIuMUwxMjUsNTIuMUwxMjUsNTIuMQ0KCQlMMTI1LDUyLjF6IE0xNDIsMTM1LjRIMTA4bDE3LTQwLjlMMTQyLDEzNS40eiIvPg0KPC9nPg0KPC9zdmc+DQo=">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" href="http://angularjs.blogspot.com/">Angular blog</a></h2>
-  </li>
-</ul>
+<div id="container">
+  <app-ks-nav-bar></app-ks-nav-bar>
 
+  <!-- Header -->
+  <a name="Adventure"></a>
+  <div class="intro-header">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="intro-message">
+            <h1>Knowledge Space</h1>
+            <h3>Choose Your Own Adventure</h3>
+            <hr class="intro-divider"/>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- /.container -->
+
+  </div>
+  <!-- /.intro-header -->
+
+  <!-- Page Content -->
+
+  <a  name="Map"></a>
+  <div class="content-section-a">
+
+    <div class="container">
+      <div class="row">
+        <div id="cy" ng-init="initGraph()"></div>
+      </div>
+
+    </div>
+    <!-- /.container -->
+
+  </div>
+  <!-- /.content-section-a -->
+  <a  name="Guides"></a>
+
+  <div class="content-section-b">
+
+    <div class="container">
+      <h1 class="text-center">{{subject}}</h1>
+      <!--<div id="wiki-container" bind-html-compile="article.intro"></div>-->
+      <div class="row">
+        <!--<div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">-->
+        <div class="col-lg-12 col-sm-12">
+          <hr class="section-heading-spacer">
+          <div class="clearfix"></div>
+          <!--<div id="wiki-container" bind-html-compile="article.body"></div>-->
+        </div>
+      </div>
+
+
+    </div>
+    <!-- /.container -->
+
+  </div>
+  <!-- /.content-section-b -->
+
+  <div class="content-section-a">
+
+
+    <!-- /.container -->
+
+  </div>
+  <!-- /.content-section-a -->
+
+  <a  name="contact"></a>
+  <div class="banner">
+
+    <div class="container">
+
+      <div class="row">
+        <div class="col-lg-6">
+          <h2>Learn More: </h2>
+        </div>
+        <div class="col-lg-6">
+          <ul class="list-inline banner-social-buttons">
+            <li>
+              <a href="https://github.com/ah3548/knowspace" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+    <!-- /.container -->
+
+  </div>
+  <!-- /.banner -->
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <ul class="list-inline">
+            <li ng-repeat="c in categories">
+              <a href="#{{c.title}}">{{c.title}}</a>
+            </li>
+          </ul>
+          <p class="copyright text-muted small">Copyright &copy; Your Company 2014. All Rights Reserved</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
