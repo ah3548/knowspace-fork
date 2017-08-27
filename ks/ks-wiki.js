@@ -19,7 +19,7 @@ function getWikiHtml(subject) {
                 disableeditsection: true,
                 disablelimitreport: true
         },
-        url = "http://en.wikipedia.org/w/api.php" + urlparse.format({ query: params });
+        url = "https://en.wikipedia.org/w/api.php" + urlparse.format({ query: params });
         winston.info(url);
     return request({
             uri: url,
@@ -65,12 +65,11 @@ function getWikiText(page, onlySummary) {
             explaintext: '',
             indexpageids: '',
             redirects: ''
-
         };
     if (onlySummary) {
         params.exintro ='';
     }
-    var url = "http://en.wikipedia.org/w/api.php" + urlparse.format({ query: params });
+    var url = "https://en.wikipedia.org/w/api.php" + urlparse.format({ query: params });
     winston.info(url);
     return request({
             uri: url,

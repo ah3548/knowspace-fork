@@ -4,10 +4,10 @@ var express = require('express'),
     graph = require('./ks-graph'),
     es = require('./esclient'),
     index = require('./index'),
-    redis = require('./ks-redis'),
+    redis = require('./ks-redis').RedisClient,
     app = express();
 
-app.use('/ks',express.static('../ks-a'));
+app.use('/ks',express.static('ks-a'));
 
 var sessions = require("client-sessions");
 app.use(sessions({
@@ -46,9 +46,9 @@ app.get('/wiki/:id', function (req, res) {
                         redis.save(wiki.getWiki, req.params.id, content);
                         return content;
                     });
-                    /*.then(() => {
-                        index.populateArticles(req.params.id);
-                    });*/
+                    // .then(() => {
+                    //     index.populateArticles(req.params.id);
+                    // });
             }
             return result;
         })

@@ -1,0 +1,1 @@
+copy "..\\target\\ks.war" "webapps\\ks.war"

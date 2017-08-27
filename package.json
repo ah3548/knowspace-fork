@@ -1,0 +1,21 @@
+{
+  "name": "ks",
+  "version": "0.0.0",
+  "description": "",
+  "main": "ks.js",
+  "dependencies": {},
+  "scripts": {
+    "start": "node ks/ks.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "cd ks && npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ah3548/knowspace"
+  },
+  "author": "Amir Husain",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/ah3548/knowspace/issues"
+  }
+}

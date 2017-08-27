@@ -1,0 +1,213 @@
+14-Aug-2017 15:12:37.273 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version:        Apache Tomcat/9.0.0.M26
+14-Aug-2017 15:12:37.275 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Aug 2 2017 20:29:05 UTC
+14-Aug-2017 15:12:37.275 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server number:         9.0.0.0
+14-Aug-2017 15:12:37.276 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Windows 10
+14-Aug-2017 15:12:37.276 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            10.0
+14-Aug-2017 15:12:37.276 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+14-Aug-2017 15:12:37.276 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             C:\Program Files\Java\jdk1.8.0_144\jre
+14-Aug-2017 15:12:37.276 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           1.8.0_144-b01
+14-Aug-2017 15:12:37.277 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+14-Aug-2017 15:12:37.277 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26
+14-Aug-2017 15:12:37.277 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26
+14-Aug-2017 15:12:37.277 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26\conf\logging.properties
+14-Aug-2017 15:12:37.278 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+14-Aug-2017 15:12:37.278 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+14-Aug-2017 15:12:37.278 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+14-Aug-2017 15:12:37.278 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26
+14-Aug-2017 15:12:37.278 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26
+14-Aug-2017 15:12:37.279 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26\temp
+14-Aug-2017 15:12:37.280 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent Loaded APR based Apache Tomcat Native library [1.2.12] using APR version [1.5.2].
+14-Aug-2017 15:12:37.280 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+14-Aug-2017 15:12:37.280 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+14-Aug-2017 15:12:38.136 INFO [main] org.apache.catalina.core.AprLifecycleListener.initializeSSL OpenSSL successfully initialized [OpenSSL 1.0.2k  26 Jan 2017]
+14-Aug-2017 15:12:38.418 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8080"]
+14-Aug-2017 15:12:39.773 INFO [main] org.apache.tomcat.util.net.NioSelectorPool.getSharedSelector Using a shared selector for servlet write/read
+14-Aug-2017 15:12:39.783 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["ajp-nio-8009"]
+14-Aug-2017 15:12:39.788 INFO [main] org.apache.tomcat.util.net.NioSelectorPool.getSharedSelector Using a shared selector for servlet write/read
+14-Aug-2017 15:12:39.789 INFO [main] org.apache.catalina.startup.Catalina.load Initialization processed in 3424 ms
+14-Aug-2017 15:12:39.863 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+14-Aug-2017 15:12:39.864 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet Engine: Apache Tomcat/9.0.0.M26
+14-Aug-2017 15:12:39.872 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26\webapps\docs]
+14-Aug-2017 15:12:40.552 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26\webapps\docs] has finished in [680] ms
+14-Aug-2017 15:12:40.553 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26\webapps\examples]
+14-Aug-2017 15:12:41.073 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26\webapps\examples] has finished in [521] ms
+14-Aug-2017 15:12:41.074 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26\webapps\host-manager]
+14-Aug-2017 15:12:41.131 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26\webapps\host-manager] has finished in [57] ms
+14-Aug-2017 15:12:41.132 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26\webapps\manager]
+14-Aug-2017 15:12:41.194 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26\webapps\manager] has finished in [61] ms
+14-Aug-2017 15:12:41.194 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26\webapps\ROOT]
+14-Aug-2017 15:12:41.239 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26\webapps\ROOT] has finished in [44] ms
+14-Aug-2017 15:12:41.241 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
+14-Aug-2017 15:12:41.249 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["ajp-nio-8009"]
+14-Aug-2017 15:12:41.252 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in 1462 ms
+14-Aug-2017 15:15:17.893 INFO [Thread-5] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-8080"]
+14-Aug-2017 15:15:18.014 INFO [Thread-5] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["ajp-nio-8009"]
+14-Aug-2017 15:15:18.082 INFO [Thread-5] org.apache.catalina.core.StandardService.stopInternal Stopping service [Catalina]
+14-Aug-2017 15:15:18.137 INFO [Thread-5] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-8080"]
+14-Aug-2017 15:15:18.141 INFO [Thread-5] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["ajp-nio-8009"]
+14-Aug-2017 15:15:18.145 INFO [Thread-5] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-8080"]
+14-Aug-2017 15:15:18.147 INFO [Thread-5] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["ajp-nio-8009"]
+14-Aug-2017 15:15:24.179 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version:        Apache Tomcat/9.0.0.M26
+14-Aug-2017 15:15:24.181 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Aug 2 2017 20:29:05 UTC
+14-Aug-2017 15:15:24.182 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server number:         9.0.0.0
+14-Aug-2017 15:15:24.182 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Windows 10
+14-Aug-2017 15:15:24.182 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            10.0
+14-Aug-2017 15:15:24.182 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+14-Aug-2017 15:15:24.182 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             C:\Program Files\Java\jdk1.8.0_144\jre
+14-Aug-2017 15:15:24.182 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           1.8.0_144-b01
+14-Aug-2017 15:15:24.182 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+14-Aug-2017 15:15:24.183 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26
+14-Aug-2017 15:15:24.183 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26
+14-Aug-2017 15:15:24.183 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26\conf\logging.properties
+14-Aug-2017 15:15:24.183 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+14-Aug-2017 15:15:24.183 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+14-Aug-2017 15:15:24.183 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+14-Aug-2017 15:15:24.184 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26
+14-Aug-2017 15:15:24.184 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26
+14-Aug-2017 15:15:24.185 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26\temp
+14-Aug-2017 15:15:24.185 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent Loaded APR based Apache Tomcat Native library [1.2.12] using APR version [1.5.2].
+14-Aug-2017 15:15:24.185 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+14-Aug-2017 15:15:24.186 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+14-Aug-2017 15:15:24.921 INFO [main] org.apache.catalina.core.AprLifecycleListener.initializeSSL OpenSSL successfully initialized [OpenSSL 1.0.2k  26 Jan 2017]
+14-Aug-2017 15:15:25.030 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8080"]
+14-Aug-2017 15:15:25.130 INFO [main] org.apache.tomcat.util.net.NioSelectorPool.getSharedSelector Using a shared selector for servlet write/read
+14-Aug-2017 15:15:25.133 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["ajp-nio-8009"]
+14-Aug-2017 15:15:25.136 INFO [main] org.apache.tomcat.util.net.NioSelectorPool.getSharedSelector Using a shared selector for servlet write/read
+14-Aug-2017 15:15:25.137 INFO [main] org.apache.catalina.startup.Catalina.load Initialization processed in 1261 ms
+14-Aug-2017 15:15:25.169 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+14-Aug-2017 15:15:25.170 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet Engine: Apache Tomcat/9.0.0.M26
+14-Aug-2017 15:15:25.180 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26\webapps\docs]
+14-Aug-2017 15:15:25.438 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26\webapps\docs] has finished in [258] ms
+14-Aug-2017 15:15:25.439 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26\webapps\examples]
+14-Aug-2017 15:15:25.755 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26\webapps\examples] has finished in [317] ms
+14-Aug-2017 15:15:25.756 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26\webapps\host-manager]
+14-Aug-2017 15:15:25.789 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26\webapps\host-manager] has finished in [33] ms
+14-Aug-2017 15:15:25.790 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26\webapps\manager]
+14-Aug-2017 15:15:25.819 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26\webapps\manager] has finished in [28] ms
+14-Aug-2017 15:15:25.819 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26\webapps\ROOT]
+14-Aug-2017 15:15:25.837 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26\webapps\ROOT] has finished in [18] ms
+14-Aug-2017 15:15:25.840 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
+14-Aug-2017 15:15:25.850 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["ajp-nio-8009"]
+14-Aug-2017 15:15:25.853 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in 714 ms
+14-Aug-2017 15:16:55.881 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.startup.HostConfig.deployWAR Deploying web application archive [C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26\webapps\ks-j-0.0.1-SNAPSHOT.war]
+14-Aug-2017 15:16:56.632 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+14-Aug-2017 15:16:56.668 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.springframework.web.context.ContextLoader.initWebApplicationContext Root WebApplicationContext: initialization started
+14-Aug-2017 15:16:56.708 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.springframework.context.support.AbstractApplicationContext.prepareRefresh Refreshing Root WebApplicationContext: startup date [Mon Aug 14 15:16:56 EDT 2017]; root of context hierarchy
+14-Aug-2017 15:16:56.820 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions Loading XML bean definitions from class path resource [applicationContext.xml]
+14-Aug-2017 15:16:57.282 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@32ec9acf: defining beans [paymentService,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,transactionBo]; root of factory hierarchy
+14-Aug-2017 15:16:57.309 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.springframework.web.context.ContextLoader.initWebApplicationContext Root WebApplicationContext: initialization completed in 641 ms
+14-Aug-2017 15:16:57.324 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] com.sun.jersey.api.core.PackagesResourceConfig.init Scanning for root resource and provider classes in the packages:
+  com.mkyong.rest
+14-Aug-2017 15:16:57.353 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] com.sun.jersey.api.core.ScanningResourceConfig.logClasses Root resource classes found:
+  class com.mkyong.rest.PaymentService
+14-Aug-2017 15:16:57.353 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] com.sun.jersey.api.core.ScanningResourceConfig.init No provider classes found.
+14-Aug-2017 15:16:57.454 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] com.sun.jersey.spi.spring.container.servlet.SpringServlet.getContext Using default applicationContext
+14-Aug-2017 15:16:57.456 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] com.sun.jersey.spi.spring.container.SpringComponentProviderFactory.registerSpringBeans Registering Spring bean, paymentService, of type com.mkyong.rest.PaymentService as a root resource class
+14-Aug-2017 15:16:57.460 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] com.sun.jersey.server.impl.application.WebApplicationImpl._initiate Initiating Jersey application, version 'Jersey: 1.19.4 05/24/2017 03:20 PM'
+14-Aug-2017 15:16:58.219 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.startup.HostConfig.deployWAR Deployment of web application archive [C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26\webapps\ks-j-0.0.1-SNAPSHOT.war] has finished in [2,338] ms
+14-Aug-2017 15:30:08.549 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.startup.HostConfig.undeploy Undeploying context [/ks-j-0.0.1-SNAPSHOT]
+14-Aug-2017 15:30:08.553 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.springframework.context.support.AbstractApplicationContext.doClose Closing Root WebApplicationContext: startup date [Mon Aug 14 15:16:56 EDT 2017]; root of context hierarchy
+14-Aug-2017 15:30:08.553 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@32ec9acf: defining beans [paymentService,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,transactionBo]; root of factory hierarchy
+14-Aug-2017 15:30:08.583 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.startup.HostConfig.deployWAR Deploying web application archive [C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26\webapps\ks-j-0.0.1-SNAPSHOT.war]
+14-Aug-2017 15:30:09.604 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+14-Aug-2017 15:30:09.634 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.springframework.web.context.ContextLoader.initWebApplicationContext Root WebApplicationContext: initialization started
+14-Aug-2017 15:30:09.680 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.springframework.context.support.AbstractApplicationContext.prepareRefresh Refreshing Root WebApplicationContext: startup date [Mon Aug 14 15:30:09 EDT 2017]; root of context hierarchy
+14-Aug-2017 15:30:09.747 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions Loading XML bean definitions from class path resource [applicationContext.xml]
+14-Aug-2017 15:30:09.984 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@51668287: defining beans [paymentService,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,transactionBo]; root of factory hierarchy
+14-Aug-2017 15:30:10.012 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.springframework.web.context.ContextLoader.initWebApplicationContext Root WebApplicationContext: initialization completed in 376 ms
+14-Aug-2017 15:30:10.028 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] com.sun.jersey.api.core.PackagesResourceConfig.init Scanning for root resource and provider classes in the packages:
+  com.mkyong.rest
+14-Aug-2017 15:30:10.058 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] com.sun.jersey.api.core.ScanningResourceConfig.logClasses Root resource classes found:
+  class com.mkyong.rest.PaymentService
+14-Aug-2017 15:30:10.058 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] com.sun.jersey.api.core.ScanningResourceConfig.init No provider classes found.
+14-Aug-2017 15:30:10.152 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] com.sun.jersey.spi.spring.container.servlet.SpringServlet.getContext Using default applicationContext
+14-Aug-2017 15:30:10.154 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] com.sun.jersey.spi.spring.container.SpringComponentProviderFactory.registerSpringBeans Registering Spring bean, paymentService, of type com.mkyong.rest.PaymentService as a root resource class
+14-Aug-2017 15:30:10.159 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] com.sun.jersey.server.impl.application.WebApplicationImpl._initiate Initiating Jersey application, version 'Jersey: 1.19.4 05/24/2017 03:20 PM'
+14-Aug-2017 15:30:11.019 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.startup.HostConfig.deployWAR Deployment of web application archive [C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26\webapps\ks-j-0.0.1-SNAPSHOT.war] has finished in [2,435] ms
+14-Aug-2017 15:30:17.612 SEVERE [http-nio-8080-exec-1] com.sun.jersey.spi.container.ContainerResponse.write A message body writer for Java class com.mkyong.transaction.impl.TransactionBoImpl$1, and Java type class com.mkyong.transaction.impl.TransactionBoImpl$1, and MIME media type application/json was not found.
+The registered message body writers compatible with the MIME media type are:
+application/json ->
+  com.sun.jersey.json.impl.provider.entity.JSONJAXBElementProvider$App
+  com.sun.jersey.json.impl.provider.entity.JSONArrayProvider$App
+  com.sun.jersey.json.impl.provider.entity.JSONObjectProvider$App
+  com.sun.jersey.json.impl.provider.entity.JSONRootElementProvider$App
+  com.sun.jersey.json.impl.provider.entity.JSONListElementProvider$App
+*/* ->
+  com.sun.jersey.core.impl.provider.entity.FormProvider
+  com.sun.jersey.core.impl.provider.entity.StringProvider
+  com.sun.jersey.core.impl.provider.entity.ByteArrayProvider
+  com.sun.jersey.core.impl.provider.entity.FileProvider
+  com.sun.jersey.core.impl.provider.entity.InputStreamProvider
+  com.sun.jersey.core.impl.provider.entity.DataSourceProvider
+  com.sun.jersey.core.impl.provider.entity.XMLJAXBElementProvider$General
+  com.sun.jersey.core.impl.provider.entity.ReaderProvider
+  com.sun.jersey.core.impl.provider.entity.DocumentProvider
+  com.sun.jersey.core.impl.provider.entity.StreamingOutputProvider
+  com.sun.jersey.core.impl.provider.entity.SourceProvider$SourceWriter
+  com.sun.jersey.json.impl.provider.entity.JSONJAXBElementProvider$General
+  com.sun.jersey.json.impl.provider.entity.JSONArrayProvider$General
+  com.sun.jersey.json.impl.provider.entity.JSONObjectProvider$General
+  com.sun.jersey.json.impl.provider.entity.JSONWithPaddingProvider
+  com.sun.jersey.server.impl.template.ViewableMessageBodyWriter
+  com.sun.jersey.core.impl.provider.entity.XMLRootElementProvider$General
+  com.sun.jersey.core.impl.provider.entity.XMLListElementProvider$General
+  com.sun.jersey.json.impl.provider.entity.JSONRootElementProvider$General
+  com.sun.jersey.json.impl.provider.entity.JSONListElementProvider$General
+  com.sun.jersey.json.impl.provider.entity.JacksonProviderProxy
+
+14-Aug-2017 15:30:17.612 SEVERE [http-nio-8080-exec-1] com.sun.jersey.spi.container.ContainerResponse.logException Mapped exception to response: 500 (Internal Server Error)
+ javax.ws.rs.WebApplicationException: com.sun.jersey.api.MessageException: A message body writer for Java class com.mkyong.transaction.impl.TransactionBoImpl$1, and Java type class com.mkyong.transaction.impl.TransactionBoImpl$1, and MIME media type application/json was not found.
+
+	at com.sun.jersey.spi.container.ContainerResponse.write(ContainerResponse.java:284)
+	at com.sun.jersey.server.impl.application.WebApplicationImpl._handleRequest(WebApplicationImpl.java:1510)
+	at com.sun.jersey.server.impl.application.WebApplicationImpl.handleRequest(WebApplicationImpl.java:1419)
+	at com.sun.jersey.server.impl.application.WebApplicationImpl.handleRequest(WebApplicationImpl.java:1409)
+	at com.sun.jersey.spi.container.servlet.WebComponent.service(WebComponent.java:409)
+	at com.sun.jersey.spi.container.servlet.ServletContainer.service(ServletContainer.java:558)
+	at com.sun.jersey.spi.container.servlet.ServletContainer.service(ServletContainer.java:733)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:199)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:475)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:140)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:80)
+	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:651)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:498)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:796)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1374)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: com.sun.jersey.api.MessageException: A message body writer for Java class com.mkyong.transaction.impl.TransactionBoImpl$1, and Java type class com.mkyong.transaction.impl.TransactionBoImpl$1, and MIME media type application/json was not found.
+
+	... 30 more
+
+14-Aug-2017 15:32:11.085 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.startup.HostConfig.undeploy Undeploying context [/ks-j-0.0.1-SNAPSHOT]
+14-Aug-2017 15:32:11.087 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.springframework.context.support.AbstractApplicationContext.doClose Closing Root WebApplicationContext: startup date [Mon Aug 14 15:30:09 EDT 2017]; root of context hierarchy
+14-Aug-2017 15:32:11.093 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@51668287: defining beans [paymentService,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,transactionBo]; root of factory hierarchy
+14-Aug-2017 15:32:11.241 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.startup.HostConfig.deployWAR Deploying web application archive [C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26\webapps\ks-j-0.0.1-SNAPSHOT.war]
+14-Aug-2017 15:32:12.137 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+14-Aug-2017 15:32:12.167 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.springframework.web.context.ContextLoader.initWebApplicationContext Root WebApplicationContext: initialization started
+14-Aug-2017 15:32:12.268 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.springframework.context.support.AbstractApplicationContext.prepareRefresh Refreshing Root WebApplicationContext: startup date [Mon Aug 14 15:32:12 EDT 2017]; root of context hierarchy
+14-Aug-2017 15:32:12.329 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions Loading XML bean definitions from class path resource [applicationContext.xml]
+14-Aug-2017 15:32:12.562 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@b703238: defining beans [paymentService,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,transactionBo]; root of factory hierarchy
+14-Aug-2017 15:32:12.587 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.springframework.web.context.ContextLoader.initWebApplicationContext Root WebApplicationContext: initialization completed in 420 ms
+14-Aug-2017 15:32:12.602 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] com.sun.jersey.api.core.PackagesResourceConfig.init Scanning for root resource and provider classes in the packages:
+  com.mkyong.rest
+14-Aug-2017 15:32:12.631 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] com.sun.jersey.api.core.ScanningResourceConfig.logClasses Root resource classes found:
+  class com.mkyong.rest.PaymentService
+14-Aug-2017 15:32:12.632 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] com.sun.jersey.api.core.ScanningResourceConfig.init No provider classes found.
+14-Aug-2017 15:32:12.724 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] com.sun.jersey.spi.spring.container.servlet.SpringServlet.getContext Using default applicationContext
+14-Aug-2017 15:32:12.727 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] com.sun.jersey.spi.spring.container.SpringComponentProviderFactory.registerSpringBeans Registering Spring bean, paymentService, of type com.mkyong.rest.PaymentService as a root resource class
+14-Aug-2017 15:32:12.731 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] com.sun.jersey.server.impl.application.WebApplicationImpl._initiate Initiating Jersey application, version 'Jersey: 1.19.4 05/24/2017 03:20 PM'
+14-Aug-2017 15:32:13.508 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.startup.HostConfig.deployWAR Deployment of web application archive [C:\Elastic\knowspace-fork\ks-j\apache-tomcat-9.0.0.M26\webapps\ks-j-0.0.1-SNAPSHOT.war] has finished in [2,267] ms
