@@ -4,7 +4,8 @@ angular.module('ksApp')
                 {title:"Map"},
                 {title:"Guides"}
               ])
-    .constant('BASEURL', "http://localhost:3000")
+    //.constant('BASEURL', "http://localhost:3000")
+    .constant('BASEURL', "http://amir.us-east-1.elasticbeanstalk.com")
     .constant('zoomToolDefaults', {
                   zoomFactor: 0.05, // zoom factor per zoom tick
                   zoomDelay: 45, // how many ms between zoom ticks
